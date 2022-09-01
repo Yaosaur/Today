@@ -1,9 +1,11 @@
 import { useFormik } from 'formik';
 import registerSchema from '../schemas/register';
+import { register } from '../services/auth-api';
+
 import { TextField, Button } from '@mui/material/';
 
-const onSubmit = (values, actions) => {
-  console.log(values, actions);
+const onSubmit = values => {
+  register(values).then(console.log('success'));
 };
 
 const Auth = () => {
