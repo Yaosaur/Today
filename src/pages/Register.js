@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import registerSchema from '../schemas/register';
 import { register } from '../services/auth-api';
 
-import { TextField, Button } from '@mui/material/';
+import { Typography, TextField, Button } from '@mui/material/';
 
 const onSubmit = values => {
   register(values).then(console.log('success'));
@@ -23,6 +23,7 @@ const Auth = () => {
 
   return (
     <>
+      <Typography variant='h1'>Register</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           required
