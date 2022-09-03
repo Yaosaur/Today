@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import registerSchema from '../schemas/register';
 import { useDispatch } from 'react-redux';
-import { receiveUser } from '../store/auth';
+import { authUser } from '../store/auth-slice';
 import { useNavigate } from 'react-router-dom';
 
 import { Typography, TextField, Button } from '@mui/material/';
@@ -11,7 +11,7 @@ const Register = () => {
   const nav = useNavigate();
 
   const onSubmit = values => {
-    dispatch(receiveUser(values));
+    dispatch(authUser('register', values));
     nav('/');
   };
 
