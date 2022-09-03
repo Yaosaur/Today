@@ -1,14 +1,20 @@
 import { useFormik } from 'formik';
 import registerSchema from '../schemas/register';
-import { register } from '../services/auth-api';
+import { useDispatch } from 'react-redux';
+import { receiveUser } from '../store/auth';
+import { useNavigate } from 'react-router-dom';
 
 import { Typography, TextField, Button } from '@mui/material/';
 
-const onSubmit = values => {
-  register(values).then(console.log('success'));
-};
+const Register = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
 
-const Auth = () => {
+  const onSubmit = values => {
+    dispatch(receiveUser(values));
+    nav('/');
+  };
+
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
@@ -81,4 +87,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default Register;

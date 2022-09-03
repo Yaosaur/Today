@@ -1,14 +1,13 @@
 import { useFormik } from 'formik';
 import logInSchema from '../schemas/logIn';
-import { logIn } from '../services/auth-api';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../store/auth';
 
 import { Typography, TextField, Button } from '@mui/material/';
 
-const onSubmit = values => {
-  logIn(values).then(console.log('success'));
-};
-
 const Auth = () => {
+  const dispatch = useDispatch();
+
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
@@ -18,6 +17,10 @@ const Auth = () => {
       validationSchema: logInSchema,
       onSubmit,
     });
+
+  const onSubmit = values => {
+    dispatch(authActions.logIn(values));
+  };
 
   return (
     <>
