@@ -11,8 +11,11 @@ const Auth = () => {
   const nav = useNavigate();
 
   const onSubmit = values => {
-    dispatch(authUser('logIn', values));
-    nav('/');
+    dispatch(authUser('logIn', values)).then(result => {
+      if (result.payload.token) {
+        nav('/');
+      }
+    });
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =

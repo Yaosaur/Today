@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 import * as authAPI from '../services/auth-api';
 import axios from 'axios';
 
@@ -32,7 +33,7 @@ export const authUser = (type, values) => {
     }
     localStorage.setItem('token', userData.data.token);
     axios.defaults.headers.common['Authorization'] = userData.data.token;
-    dispatch(authActions.receiveUser(userData.data));
+    return dispatch(authActions.receiveUser(userData.data));
   };
 };
 
