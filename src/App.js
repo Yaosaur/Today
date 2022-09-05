@@ -5,7 +5,7 @@ import AuthRoute from './utils/AuthRoute';
 import Register from './pages/Register';
 import LogIn from './pages/LogIn';
 import ProtectedRoute from './utils/ProtectedRoute';
-import DashBoard from './pages/Main';
+import Main from './pages/Main';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<ProtectedRoute />}>
-            <Route path='/' element={<DashBoard />} />
+            <Route path='/' element={<Main />} />
           </Route>
           <Route path='/' element={<AuthRoute />}>
             <Route path='/login' element={<LogIn />} />

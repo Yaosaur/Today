@@ -1,15 +1,18 @@
 import Navi from '../components/Navi';
+import DashBoard from '../components/DashBoard';
 import { Grid } from '@mui/material';
 
-const DashBoard = () => {
+const Main = () => {
   return (
     <Grid container>
       <Grid item xs={3}>
         <Navi />
       </Grid>
-      <Grid item xs={9}></Grid>
+      <Grid item xs={9}>
+        <DashBoard />
+      </Grid>
     </Grid>
   );
 };
 
-export default DashBoard;
+export default Main;
