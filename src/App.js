@@ -5,7 +5,7 @@ import AuthRoute from './utils/AuthRoute';
 import Register from './pages/Register';
 import LogIn from './pages/LogIn';
 import ProtectedRoute from './utils/ProtectedRoute';
-import DashBoard from './pages/DashBoard';
+import DashBoard from './pages/Main';
 
 function App() {
   return (
