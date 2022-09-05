@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useNavigate } from 'react-router-dom';
 import * as authAPI from '../services/auth-api';
 import axios from 'axios';
 

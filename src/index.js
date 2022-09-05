@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     axios.defaults.headers.common['Authorization'] = localStorage.token;
     const decodedUser = decode(localStorage.token);
     const currentTime = Date.now() / 1000;
-    console.log(decodedUser.exp);
-    console.log(currentTime);
     if (decodedUser.exp < currentTime) {
       store.dispatch(logOut());
     } else {
