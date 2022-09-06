@@ -6,7 +6,7 @@ import App from './App';
 import { logOut } from './store/auth-slice';
 
 import { authActions } from './store/auth-slice';
-import { fetchProjects } from './store/project-slice';
+import { fetchProjects } from './store/projects-slice';
 import axios from 'axios';
 import decode from 'jwt-decode';
 

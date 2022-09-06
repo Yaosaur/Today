@@ -1,15 +1,21 @@
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import newProjectSchema from '../schemas/newProject';
 import { createProject } from '../services/projects-api';
+import { projectsActions } from '../store/projects-slice';
 
 import { Stack, Typography, TextField, Button } from '@mui/material';
 
 function NewProjectForm() {
+  const dispatch = useDispatch();
   const nav = useNavigate();
 
   const onSubmit = values => {
-    createProject(values).then(result => nav(`/projects/${result.data._id}`));
+    createProject(values).then(result => {
+      dispatch(projectsActions.addToProjects(result.data));
+      nav(`/projects/${result.data._id}`);
+    });
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =

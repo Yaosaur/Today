@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { projectsActions } from '../store/projects-slice';
 import { getProject } from '../services/projects-api';
 import { useFormik } from 'formik';
 import newProjectSchema from '../schemas/newProject';
@@ -16,9 +18,11 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import { authActions } from '../store/auth-slice';
 
 function Project() {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const nav = useNavigate();
   const [project, setProject] = useState({});
   const [isEditing, setIsEditing] = useState({
@@ -53,13 +57,17 @@ function Project() {
 
   const editProjectHandler = () => {
     editProject(id, values).then(data => {
+      dispatch(projectsActions.editProject(data.data));
       setProject(data.data);
       notEditingHandler();
     });
   };
 
   const deleteProjectHandler = () => {
-    deleteProject(id).then(nav('/', { replace: true }));
+    deleteProject(id).then(data => {
+      dispatch(projectsActions.removeFromProjects(data.data));
+      nav('/', { replace: true });
+    });
   };
 
   return (
