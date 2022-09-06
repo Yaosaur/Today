@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 
 function DashBoard() {
-  const firstName = useSelector(state => state.authReducer.user.firstName);
+  const firstName = useSelector(state => state.auth.user.firstName);
 
   return (
     <div>

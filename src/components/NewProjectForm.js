@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import newProjectSchema from '../schemas/newProject';
-import { createProject } from '../services/project-api';
+import { createProject } from '../services/projects-api';
 
 import { Stack, Typography, TextField, Button } from '@mui/material';
 

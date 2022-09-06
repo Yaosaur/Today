@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { List, ListItemButton, ListItemText } from '@mui/material';
 
 function ProjectList() {
+  const projects = useSelector(state => state.projects.projects);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (event, index) => {
@@ -11,18 +13,17 @@ function ProjectList() {
 
   return (
     <List component='ul' aria-label='main mailbox folders'>
-      <ListItemButton
-        selected={selectedIndex === 0}
-        onClick={event => handleListItemClick(event, 0)}
-      >
-        <ListItemText primary='Title 1' />
-      </ListItemButton>
-      <ListItemButton
-        selected={selectedIndex === 1}
-        onClick={event => handleListItemClick(event, 1)}
-      >
-        <ListItemText primary='Title 2' />
-      </ListItemButton>
+      {projects.map((project, index) => {
+        return (
+          <ListItemButton
+            key={project._id}
+            selected={selectedIndex === index}
+            onClick={event => handleListItemClick(event, index)}
+          >
+            <ListItemText primary={project.title} />
+          </ListItemButton>
+        );
+      })}
     </List>
   );
 }
