@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react';
 import { findUser } from '../services/users-api';
+import { useSelector } from 'react-redux';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 function MembersSelect(props) {
+  const currentUserEmail = useSelector(state => state.auth.user.email);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    findUser().then(data => setOptions(data.data));
+    findUser().then(data => {
+      const filteredEmailList = data.data.filter(
+        user => user.email !== currentUserEmail
+      );
+      setOptions(filteredEmailList);
+    });
   }, []);
 
   return (
