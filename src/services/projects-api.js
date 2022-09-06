@@ -14,6 +14,10 @@ export const createProject = data => {
   return axios.post(`${baseURL}/projects`, data);
 };
 
+export const editProject = (id, data) => {
+  return axios.put(`${baseURL}/projects/${id}`, data);
+};
+
 export const findUser = data => {
   return axios.get(`${baseURL}/user`, data);
 };
