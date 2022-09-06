@@ -8,6 +8,7 @@ import newProjectSchema from '../schemas/newProject';
 import { editProject } from '../services/projects-api';
 import { deleteProject } from '../services/projects-api';
 
+import AsyncInput from '../components/MembersSelect';
 import {
   Typography,
   Tooltip,
@@ -18,7 +19,6 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { authActions } from '../store/auth-slice';
 
 function Project() {
   const { id } = useParams();
@@ -144,6 +144,13 @@ function Project() {
           </Tooltip>
         </>
       )}
+      <Typography variant='h5'>Members</Typography>
+      {project.members &&
+        project.members.map((member, index) => (
+          <p key={index}>
+            {member.firstName} {member.lastName}
+          </p>
+        ))}
     </>
   );
 }

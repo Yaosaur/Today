@@ -4,15 +4,17 @@ import { useFormik } from 'formik';
 import newProjectSchema from '../schemas/newProject';
 import { createProject } from '../services/projects-api';
 import { projectsActions } from '../store/projects-slice';
-
+import { useState } from 'react';
 import { Stack, Typography, TextField, Button } from '@mui/material';
+import MembersSelect from '../components/MembersSelect';
 
 function NewProjectForm() {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [members, setMembers] = useState([]);
 
   const onSubmit = values => {
-    createProject(values).then(result => {
+    createProject({ ...values, members }).then(result => {
       dispatch(projectsActions.addToProjects(result.data));
       nav(`/projects/${result.data._id}`);
     });
@@ -23,11 +25,14 @@ function NewProjectForm() {
       initialValues: {
         title: '',
         description: '',
-        members: [],
       },
       validationSchema: newProjectSchema,
       onSubmit,
     });
+
+  const changeMemberHandler = members => {
+    setMembers(members);
+  };
 
   return (
     <div>
@@ -67,6 +72,7 @@ function NewProjectForm() {
             error={touched.description && Boolean(errors.description)}
             helperText={touched.description && errors.description}
           />
+          <MembersSelect onChange={changeMemberHandler} />
           <Button variant='contained' type='submit'>
             Create
           </Button>
