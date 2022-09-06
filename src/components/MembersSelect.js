@@ -18,6 +18,8 @@ function MembersSelect(props) {
         id='tags-standard'
         options={options}
         getOptionLabel={option => option.email}
+        defaultValue={props.defaultMembers}
+        isOptionEqualToValue={(option, value) => option.email === value.email}
         onChange={(event, value) => {
           props.onChange(value);
         }}

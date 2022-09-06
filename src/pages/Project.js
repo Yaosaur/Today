@@ -8,7 +8,7 @@ import newProjectSchema from '../schemas/newProject';
 import { editProject } from '../services/projects-api';
 import { deleteProject } from '../services/projects-api';
 
-import AsyncInput from '../components/MembersSelect';
+import MembersSelect from '../components/MembersSelect';
 import {
   Typography,
   Tooltip,
@@ -25,9 +25,11 @@ function Project() {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [project, setProject] = useState({});
+  const [members, setMembers] = useState([]);
   const [isEditing, setIsEditing] = useState({
     title: false,
     description: false,
+    members: false,
   });
 
   useEffect(() => {
@@ -45,18 +47,24 @@ function Project() {
 
   const isEditingHandler = type => {
     if (type === 'title') {
-      setIsEditing({ title: true, description: false });
+      setIsEditing(prevState => ({ ...prevState, title: true }));
     } else if (type === 'description') {
-      setIsEditing({ title: false, description: true });
+      setIsEditing(prevState => ({ ...prevState, description: true }));
+    } else if (type === 'members') {
+      setIsEditing(prevState => ({ ...prevState, members: true }));
     }
   };
 
   const notEditingHandler = () => {
-    setIsEditing({ title: false, description: false });
+    setIsEditing({ title: false, description: false, members: false });
+  };
+
+  const changeMemberHandler = members => {
+    setMembers(members);
   };
 
   const editProjectHandler = () => {
-    editProject(id, values).then(data => {
+    editProject(id, { ...values, members }).then(data => {
       dispatch(projectsActions.editProject(data.data));
       setProject(data.data);
       notEditingHandler();
@@ -110,6 +118,7 @@ function Project() {
         </>
       )}
 
+      <Typography variant='h3'>Description</Typography>
       {isEditing.description ? (
         <>
           <TextField
@@ -144,13 +153,41 @@ function Project() {
           </Tooltip>
         </>
       )}
-      <Typography variant='h5'>Members</Typography>
-      {project.members &&
-        project.members.map((member, index) => (
-          <p key={index}>
-            {member.firstName} {member.lastName}
-          </p>
-        ))}
+
+      <Typography variant='h3'>Members</Typography>
+      {isEditing.members ? (
+        <>
+          <MembersSelect
+            editMode={true}
+            defaultMembers={project.members}
+            onChange={changeMemberHandler}
+          />
+          <Tooltip title='Save Changes'>
+            <IconButton onClick={editProjectHandler}>
+              <CheckIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Cancel Editing'>
+            <IconButton onClick={notEditingHandler}>
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+      ) : (
+        <>
+          {project.members &&
+            project.members.map((member, index) => (
+              <p key={index}>
+                {member.firstName} {member.lastName}
+              </p>
+            ))}
+          <Tooltip title='Edit Members'>
+            <IconButton onClick={() => isEditingHandler('members')}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+      )}
     </>
   );
 }
