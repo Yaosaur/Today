@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getProjects } from '../services/projects-api';
+import { Outlet } from 'react-router-dom';
 import Navi from '../components/Navi';
-import DashBoard from '../components/DashBoard';
 import { Grid } from '@mui/material';
 
 const Main = () => {
@@ -11,7 +9,7 @@ const Main = () => {
         <Navi />
       </Grid>
       <Grid item xs={9}>
-        <DashBoard />
+        <Outlet />
       </Grid>
     </Grid>
   );

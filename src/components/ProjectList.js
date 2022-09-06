@@ -5,7 +5,7 @@ import { List, ListItemButton, ListItemText } from '@mui/material';
 
 function ProjectList() {
   const projects = useSelector(state => state.projects.projects);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);

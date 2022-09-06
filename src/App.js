@@ -4,8 +4,9 @@ import { ThemeProvider } from '@mui/material';
 import AuthRoute from './utils/AuthRoute';
 import Register from './pages/Register';
 import LogIn from './pages/LogIn';
-import NewProjectForm from './components/NewProjectForm';
 import ProtectedRoute from './utils/ProtectedRoute';
+import DashBoard from './components/DashBoard';
+import NewProjectForm from './components/NewProjectForm';
 import Main from './pages/Main';
 
 function App() {
@@ -14,8 +15,8 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<ProtectedRoute />}>
-            <Route path='/' element={<Main />} />
-            <Route path='newproject' element={<NewProjectForm />} />
+              <Route path='/' element={<DashBoard />} />
+              <Route path='newproject' element={<NewProjectForm />} />
           </Route>
           <Route path='/' element={<AuthRoute />}>
             <Route path='/login' element={<LogIn />} />
