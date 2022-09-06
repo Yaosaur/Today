@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getProject } from '../services/projects-api';
 import { useFormik } from 'formik';
 import newProjectSchema from '../schemas/newProject';
 import { editProject } from '../services/projects-api';
+import { deleteProject } from '../services/projects-api';
 
-import { Typography, Tooltip, IconButton, TextField } from '@mui/material';
+import {
+  Typography,
+  Tooltip,
+  IconButton,
+  TextField,
+  Button,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 
 function Project() {
   const { id } = useParams();
+  const nav = useNavigate();
   const [project, setProject] = useState({});
   const [isEditing, setIsEditing] = useState({
     title: false,
@@ -50,8 +58,15 @@ function Project() {
     });
   };
 
+  const deleteProjectHandler = () => {
+    deleteProject(id).then(nav('/', { replace: true }));
+  };
+
   return (
-    <div>
+    <>
+      <Button variant='contained' color='error' onClick={deleteProjectHandler}>
+        Delete Project
+      </Button>
       {isEditing.title ? (
         <>
           <TextField
@@ -121,7 +136,7 @@ function Project() {
           </Tooltip>
         </>
       )}
-    </div>
+    </>
   );
 }
 

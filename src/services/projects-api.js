@@ -18,6 +18,10 @@ export const editProject = (id, data) => {
   return axios.put(`${baseURL}/projects/${id}`, data);
 };
 
+export const deleteProject = id => {
+  return axios.delete(`${baseURL}/projects/${id}`);
+};
+
 export const findUser = data => {
   return axios.get(`${baseURL}/user`, data);
 };
