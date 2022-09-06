@@ -1,14 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { List, ListItemButton, ListItemText } from '@mui/material';
 
 function ProjectList() {
+  const nav = useNavigate();
   const projects = useSelector(state => state.projects.projects);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+    nav(`/projects/${projects[index]._id}`);
   };
 
   return (

@@ -6,6 +6,10 @@ export const getProjects = () => {
   return axios.get(`${baseURL}/projects`);
 };
 
+export const getProject = id => {
+  return axios.get(`${baseURL}/projects/${id}`);
+};
+
 export const createProject = data => {
   return axios.post(`${baseURL}/projects`, data);
 };

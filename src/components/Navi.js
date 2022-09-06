@@ -38,7 +38,11 @@ function Navi() {
       <Box display='flex' justifyContent='space-between'>
         <Typography variant='h4'>Projects</Typography>
         <Tooltip title='Add Project'>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              nav('/newproject');
+            }}
+          >
             <AddIcon />
           </IconButton>
         </Tooltip>

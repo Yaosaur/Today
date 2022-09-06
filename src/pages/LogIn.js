@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Grid, Stack, Typography, TextField, Button } from '@mui/material/';
 import FormPaper from '../styles/FormPaper';
 
-const Auth = () => {
+function LogIn() {
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -104,6 +104,6 @@ const Auth = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
-export default Auth;
+export default LogIn;

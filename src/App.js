@@ -5,9 +5,9 @@ import AuthRoute from './utils/AuthRoute';
 import Register from './pages/Register';
 import LogIn from './pages/LogIn';
 import ProtectedRoute from './utils/ProtectedRoute';
-import DashBoard from './components/DashBoard';
-import NewProjectForm from './components/NewProjectForm';
-import Main from './pages/Main';
+import DashBoard from './pages/DashBoard';
+import NewProjectForm from './pages/NewProjectForm';
+import Project from './pages/Project';
 
 function App() {
   return (
@@ -15,8 +15,9 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<ProtectedRoute />}>
-              <Route path='/' element={<DashBoard />} />
-              <Route path='newproject' element={<NewProjectForm />} />
+            <Route path='/' element={<DashBoard />} />
+            <Route path='newproject' element={<NewProjectForm />} />
+            <Route path='projects/:id' element={<Project />} />
           </Route>
           <Route path='/' element={<AuthRoute />}>
             <Route path='/login' element={<LogIn />} />

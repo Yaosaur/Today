@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Grid, Stack, Typography, TextField, Button } from '@mui/material/';
 import FormPaper from '../styles/FormPaper';
 
-const Register = () => {
+function Register() {
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -116,6 +116,6 @@ const Register = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
 export default Register;

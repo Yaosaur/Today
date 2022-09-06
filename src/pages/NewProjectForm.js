@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import newProjectSchema from '../schemas/newProject';
 import { createProject } from '../services/projects-api';
@@ -5,8 +6,10 @@ import { createProject } from '../services/projects-api';
 import { Stack, Typography, TextField, Button } from '@mui/material';
 
 function NewProjectForm() {
+  const nav = useNavigate();
+
   const onSubmit = values => {
-    createProject(values).then(result => console.log(result));
+    createProject(values).then(result => nav(`/projects/${result.data._id}`));
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =

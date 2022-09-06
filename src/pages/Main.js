@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Navi from '../components/Navi';
 import { Grid } from '@mui/material';
 
-const Main = () => {
+function Main() {
   return (
     <Grid container>
       <Grid item xs={3}>
@@ -13,6 +13,6 @@ const Main = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
 export default Main;
