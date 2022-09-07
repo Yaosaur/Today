@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { projectsActions } from '../store/projects-slice';
 import { logOut } from '../store/auth-slice';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ function Navi() {
   const logOutHandler = () => {
     dispatch(logOut());
     nav('/login');
+    dispatch(projectsActions.removeAllProjects());
   };
 
   return (
@@ -38,7 +40,11 @@ function Navi() {
       <Box display='flex' justifyContent='space-between'>
         <Typography variant='h4'>Projects</Typography>
         <Tooltip title='Add Project'>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              nav('/newproject');
+            }}
+          >
             <AddIcon />
           </IconButton>
         </Tooltip>

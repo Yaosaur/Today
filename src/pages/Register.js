@@ -7,13 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { Grid, Stack, Typography, TextField, Button } from '@mui/material/';
 import FormPaper from '../styles/FormPaper';
 
-const Register = () => {
+function Register() {
   const dispatch = useDispatch();
   const nav = useNavigate();
 
   const onSubmit = values => {
-    dispatch(authUser('register', values));
-    nav('/');
+    dispatch(authUser('register', values)).then(result => nav('/'));
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
@@ -116,6 +115,6 @@ const Register = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
 export default Register;

@@ -6,10 +6,11 @@ import App from './App';
 import { logOut } from './store/auth-slice';
 
 import { authActions } from './store/auth-slice';
+import { fetchProjects } from './store/projects-slice';
 import axios from 'axios';
 import decode from 'jwt-decode';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (localStorage.token) {
     axios.defaults.headers.common['Authorization'] = localStorage.token;
     const decodedUser = decode(localStorage.token);

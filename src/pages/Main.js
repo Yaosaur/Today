@@ -1,18 +1,18 @@
+import { Outlet } from 'react-router-dom';
 import Navi from '../components/Navi';
-import DashBoard from '../components/DashBoard';
 import { Grid } from '@mui/material';
 
-const Main = () => {
+function Main() {
   return (
     <Grid container>
       <Grid item xs={3}>
         <Navi />
       </Grid>
       <Grid item xs={9}>
-        <DashBoard />
+        <Outlet />
       </Grid>
     </Grid>
   );
-};
+}
 
 export default Main;
