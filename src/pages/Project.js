@@ -33,7 +33,10 @@ function Project() {
   });
 
   useEffect(() => {
-    getProject(id).then(data => setProject(data.data));
+    getProject(id).then(data => {
+      console.log(data.data);
+      setProject(data.data);
+    });
   }, [id]);
 
   const { values, touched, errors, handleChange, handleBlur } = useFormik({
@@ -45,18 +48,14 @@ function Project() {
     validationSchema: newProjectSchema,
   });
 
-  const isEditingHandler = type => {
+  const editingHandler = (type, state) => {
     if (type === 'title') {
-      setIsEditing(prevState => ({ ...prevState, title: true }));
+      setIsEditing(prevState => ({ ...prevState, title: state }));
     } else if (type === 'description') {
-      setIsEditing(prevState => ({ ...prevState, description: true }));
+      setIsEditing(prevState => ({ ...prevState, description: state }));
     } else if (type === 'members') {
-      setIsEditing(prevState => ({ ...prevState, members: true }));
+      setIsEditing(prevState => ({ ...prevState, members: state }));
     }
-  };
-
-  const notEditingHandler = () => {
-    setIsEditing({ title: false, description: false, members: false });
   };
 
   const changeMemberHandler = members => {
@@ -67,7 +66,11 @@ function Project() {
     editProject(id, { ...values, members }).then(data => {
       dispatch(projectsActions.editProject(data.data));
       setProject(data.data);
-      notEditingHandler();
+      setIsEditing({
+        title: false,
+        description: false,
+        members: false,
+      });
     });
   };
 
@@ -102,7 +105,7 @@ function Project() {
             </IconButton>
           </Tooltip>
           <Tooltip title='Cancel Editing'>
-            <IconButton onClick={notEditingHandler}>
+            <IconButton onClick={() => editingHandler('title', false)}>
               <ClearIcon />
             </IconButton>
           </Tooltip>
@@ -111,7 +114,7 @@ function Project() {
         <>
           <Typography variant='h3'>{project.title}</Typography>
           <Tooltip title='Edit Title'>
-            <IconButton onClick={() => isEditingHandler('title')}>
+            <IconButton onClick={() => editingHandler('title', true)}>
               <EditIcon />
             </IconButton>
           </Tooltip>
@@ -138,7 +141,7 @@ function Project() {
             </IconButton>
           </Tooltip>
           <Tooltip title='Cancel Editing'>
-            <IconButton onClick={notEditingHandler}>
+            <IconButton onClick={() => editingHandler('description', false)}>
               <ClearIcon />
             </IconButton>
           </Tooltip>
@@ -147,7 +150,7 @@ function Project() {
         <>
           <Typography variant='h5'>{project.description}</Typography>
           <Tooltip title='Edit Description'>
-            <IconButton onClick={() => isEditingHandler('description')}>
+            <IconButton onClick={() => editingHandler('description', true)}>
               <EditIcon />
             </IconButton>
           </Tooltip>
@@ -168,7 +171,7 @@ function Project() {
             </IconButton>
           </Tooltip>
           <Tooltip title='Cancel Editing'>
-            <IconButton onClick={notEditingHandler}>
+            <IconButton onClick={() => editingHandler('members', false)}>
               <ClearIcon />
             </IconButton>
           </Tooltip>
@@ -182,7 +185,7 @@ function Project() {
               </p>
             ))}
           <Tooltip title='Edit Members'>
-            <IconButton onClick={() => isEditingHandler('members')}>
+            <IconButton onClick={() => editingHandler('members', true)}>
               <EditIcon />
             </IconButton>
           </Tooltip>
