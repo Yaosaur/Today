@@ -36,6 +36,12 @@ function Project() {
   const [isAddingTask, setIsAddingTask] = useState(false);
 
   useEffect(() => {
+    setIsEditing({
+      title: false,
+      description: false,
+      members: false,
+    });
+    setIsAddingTask(false);
     getProject(id).then(data => {
       setProject(data.data);
     });
