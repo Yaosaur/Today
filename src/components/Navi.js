@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { projectsActions } from '../store/projects-slice';
 import { logOut } from '../store/auth-slice';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ function Navi() {
   const logOutHandler = () => {
     dispatch(logOut());
     nav('/login');
+    dispatch(projectsActions.removeAllProjects());
   };
 
   return (

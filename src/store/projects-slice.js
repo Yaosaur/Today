@@ -24,6 +24,9 @@ const projectsSlice = createSlice({
         project => project._id !== action.payload._id
       );
     },
+    removeAllProjects(state) {
+      state.projects = [];
+    },
   },
 });
 
