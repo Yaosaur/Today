@@ -12,8 +12,7 @@ function Register() {
   const nav = useNavigate();
 
   const onSubmit = values => {
-    dispatch(authUser('register', values));
-    nav('/');
+    dispatch(authUser('register', values)).then(result => nav('/'));
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
