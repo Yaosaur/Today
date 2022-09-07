@@ -22,6 +22,8 @@ function MembersSelect(props) {
     }
   }, [currentUser, props.memberOptions]);
 
+  console.log(props.errMsg);
+
   return (
     <>
       <Autocomplete
@@ -40,6 +42,8 @@ function MembersSelect(props) {
             variant='standard'
             label='Members'
             placeholder='Add Members'
+            error={Boolean(props.errMsg)}
+            helperText={props.errMsg && props.errMsg}
           />
         )}
       />
