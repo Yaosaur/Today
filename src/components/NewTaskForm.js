@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import newTaskSchema from '../schemas/newTask';
+import { createTask } from '../services/tasks-api';
+import { projectsActions } from '../store/projects-slice';
 
 import { TextField, MenuItem, Button } from '@mui/material';
 import MembersSelect from './MembersSelect';
@@ -8,23 +12,29 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-function NewTaskForm({ projectMembers }) {
-  const [members, setMembers] = useState([]);
+function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const [assignedTo, setAssignment] = useState([]);
   const [errMsg, setErrMsg] = useState('');
 
   const changeMemberHandler = members => {
-    setMembers(members);
-    if (members.length === 1) {
+    setAssignment(members);
+    if (assignedTo.length === 1) {
       setErrMsg('');
     }
   };
 
   const onSubmit = values => {
-    if (members.length === 0) {
+    if (assignedTo.length === 0) {
       setErrMsg('Assign this task to at least one member');
       return;
     } else {
-      console.log({ ...values, members });
+      createTask(id, { ...values, assignedTo }).then(data => {
+        setProject(data.data);
+        dispatch(projectsActions.editProject(data.data));
+        addTaskHandler(false);
+      });
     }
   };
 

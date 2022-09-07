@@ -22,8 +22,6 @@ function MembersSelect(props) {
     }
   }, [currentUser, props.memberOptions]);
 
-  console.log(props.errMsg);
-
   return (
     <>
       <Autocomplete

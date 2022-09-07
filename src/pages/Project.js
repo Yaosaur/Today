@@ -211,7 +211,12 @@ function Project() {
               <ClearIcon />
             </IconButton>
           </Tooltip>
-          <NewTaskForm projectMembers={project.members} />
+          <NewTaskForm
+            id={id}
+            projectMembers={project.members}
+            addTaskHandler={setIsAddingTask}
+            setProject={setProject}
+          />
         </>
       ) : (
         <Tooltip title='Add Task'>
@@ -220,6 +225,7 @@ function Project() {
           </IconButton>
         </Tooltip>
       )}
+      {project.tasks && project.tasks.map(task => <p>{task.title}</p>)}
     </>
   );
 }
