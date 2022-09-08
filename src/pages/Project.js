@@ -9,6 +9,7 @@ import { editProject } from '../services/projects-api';
 import { deleteProject } from '../services/projects-api';
 
 import MembersSelect from '../components/MembersSelect';
+import NewTaskForm from '../components/NewTaskForm';
 import {
   Typography,
   Tooltip,
@@ -19,6 +20,8 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import AddIcon from '@mui/icons-material/Add';
+import TaskTable from '../components/TaskTable';
 
 function Project() {
   const { id } = useParams();
@@ -31,10 +34,16 @@ function Project() {
     description: false,
     members: false,
   });
+  const [isAddingTask, setIsAddingTask] = useState(false);
 
   useEffect(() => {
+    setIsEditing({
+      title: false,
+      description: false,
+      members: false,
+    });
+    setIsAddingTask(false);
     getProject(id).then(data => {
-      console.log(data.data);
       setProject(data.data);
     });
   }, [id]);
@@ -79,6 +88,10 @@ function Project() {
       dispatch(projectsActions.removeFromProjects(data.data));
       nav('/', { replace: true });
     });
+  };
+
+  const toggleTaskFormHandler = () => {
+    setIsAddingTask(prevState => !prevState);
   };
 
   return (
@@ -191,6 +204,29 @@ function Project() {
           </Tooltip>
         </>
       )}
+      <Typography variant='h3'>Tasks</Typography>
+      {isAddingTask ? (
+        <>
+          <Tooltip title='Cancel Adding'>
+            <IconButton onClick={toggleTaskFormHandler}>
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+          <NewTaskForm
+            id={id}
+            projectMembers={project.members}
+            addTaskHandler={setIsAddingTask}
+            setProject={setProject}
+          />
+        </>
+      ) : (
+        <Tooltip title='Add Task'>
+          <IconButton onClick={toggleTaskFormHandler}>
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+      {project.tasks && <TaskTable taskData={project.tasks} />}
     </>
   );
 }

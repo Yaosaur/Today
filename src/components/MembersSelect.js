@@ -6,17 +6,21 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 function MembersSelect(props) {
-  const currentUserEmail = useSelector(state => state.auth.user.email);
+  const currentUser = useSelector(state => state.auth.user);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    findUser().then(data => {
-      const filteredEmailList = data.data.filter(
-        user => user.email !== currentUserEmail
-      );
-      setOptions(filteredEmailList);
-    });
-  }, []);
+    if (props.memberOptions) {
+      setOptions([currentUser, ...props.memberOptions]);
+    } else {
+      findUser().then(data => {
+        const filteredEmailList = data.data.filter(
+          user => user.email !== currentUser.email
+        );
+        setOptions(filteredEmailList);
+      });
+    }
+  }, [currentUser, props.memberOptions]);
 
   return (
     <>
@@ -36,6 +40,8 @@ function MembersSelect(props) {
             variant='standard'
             label='Members'
             placeholder='Add Members'
+            error={Boolean(props.errMsg)}
+            helperText={props.errMsg && props.errMsg}
           />
         )}
       />
