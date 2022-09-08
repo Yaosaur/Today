@@ -14,7 +14,6 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
   const dispatch = useDispatch();
-  const nav = useNavigate();
   const [assignedTo, setAssignment] = useState([]);
   const [errMsg, setErrMsg] = useState('');
 
@@ -51,6 +50,7 @@ function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
       title: '',
       description: '',
       deadline: new Date(),
+      priority: 'Low',
       type: 'New Feature',
     },
     validationSchema: newTaskSchema,
@@ -114,6 +114,18 @@ function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
       >
         <MenuItem value={'New Feature'}>New Feature</MenuItem>
         <MenuItem value={'Bug Fix'}>Bug Fix</MenuItem>
+      </TextField>
+      <TextField
+        id='priority'
+        select
+        label='Priority'
+        name='priority'
+        value={values.priority}
+        onChange={handleChange}
+      >
+        <MenuItem value={'Low'}>Low</MenuItem>
+        <MenuItem value={'Medium'}>Medium</MenuItem>
+        <MenuItem value={'High'}>High</MenuItem>
       </TextField>
       <Button variant='contained' type='submit'>
         Create Task

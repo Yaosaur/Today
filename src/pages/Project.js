@@ -21,6 +21,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
+import TaskTable from '../components/TaskTable';
 
 function Project() {
   const { id } = useParams();
@@ -225,7 +226,7 @@ function Project() {
           </IconButton>
         </Tooltip>
       )}
-      {project.tasks && project.tasks.map(task => <p>{task.title}</p>)}
+      {project.tasks && <TaskTable taskData={project.tasks} />}
     </>
   );
 }
