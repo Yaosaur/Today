@@ -1,3 +1,4 @@
+import { minWidth } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 
 function dateTransformer(date) {
@@ -9,9 +10,15 @@ function dateTransformer(date) {
 
 function TaskTable(props) {
   const columns = [
-    { field: 'title', headerName: 'Title', width: 70 },
+    {
+      field: 'title',
+      headerName: 'Title',
+      minWidth: 200,
+      flex: 1,
+      textAlign: 'center',
+    },
     { field: 'issuer', headerName: 'Issuer', width: 130 },
-    { field: 'assignedTo', headerName: 'Assigned To', width: 300 },
+    { field: 'assignedTo', headerName: 'Assigned To', minWidth: 200, flex: 1 },
     { field: 'dateCreated', headerName: 'Date Created', width: 200 },
     {
       field: 'deadline',
@@ -19,7 +26,7 @@ function TaskTable(props) {
       width: 200,
     },
     { field: 'priority', headerName: 'Priority', width: 90 },
-    { field: 'type', headerName: 'Type', width: 90 },
+    { field: 'type', headerName: 'Type', minWidth: 150 },
   ];
 
   let transformedData = props.taskData.map(task => {

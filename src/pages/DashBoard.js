@@ -6,7 +6,7 @@ function DashBoard() {
 
   return (
     <div>
-      <Typography variant='h3'>Let's get it, {firstName}!</Typography>
+      <Typography variant='title'>You got this, {firstName}!</Typography>
     </div>
   );
 }

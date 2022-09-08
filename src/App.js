@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material';
 
+import theme from './styles/theme';
 import AuthRoute from './utils/AuthRoute';
 import Register from './pages/Register';
 import LogIn from './pages/LogIn';
@@ -9,9 +10,11 @@ import DashBoard from './pages/DashBoard';
 import NewProjectForm from './pages/NewProjectForm';
 import Project from './pages/Project';
 
+const customTheme = createTheme(theme);
+
 function App() {
   return (
-    <div>
+    <ThemeProvider theme={customTheme}>
       <Router>
         <Routes>
           <Route path='/' element={<ProtectedRoute />}>
@@ -25,7 +28,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </div>
+    </ThemeProvider>
   );
 }
 

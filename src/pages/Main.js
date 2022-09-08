@@ -1,14 +1,38 @@
 import { Outlet } from 'react-router-dom';
 import Navi from '../components/Navi';
 import { Grid } from '@mui/material';
+import cloudbg from '../images/cloudbg.jpg';
+import projectbg from '../images/projectbg.jpg';
 
 function Main() {
   return (
-    <Grid container>
-      <Grid item xs={3}>
+    <Grid container height='100vh'>
+      <Grid
+        item
+        md={4}
+        lg={2.5}
+        style={{
+          backgroundColor: 'aliceblue',
+        }}
+      >
         <Navi />
       </Grid>
-      <Grid item xs={9}>
+      <Grid
+        container
+        spacing={0}
+        direction='column'
+        alignItems='center'
+        justifyContent='center'
+        style={{
+          minHeight: '100vh',
+          backgroundImage: `url(${projectbg})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+        }}
+        item
+        md={8}
+        lg={9.5}
+      >
         <Outlet />
       </Grid>
     </Grid>

@@ -11,6 +11,7 @@ import { deleteProject } from '../services/projects-api';
 import MembersSelect from '../components/MembersSelect';
 import NewTaskForm from '../components/NewTaskForm';
 import {
+  Grid,
   Typography,
   Tooltip,
   IconButton,
@@ -95,139 +96,189 @@ function Project() {
   };
 
   return (
-    <>
-      <Button variant='contained' color='error' onClick={deleteProjectHandler}>
-        Delete Project
-      </Button>
-      {isEditing.title ? (
-        <>
-          <TextField
-            size='small'
-            id='outlined-required'
-            label='Title'
-            name='title'
-            value={values.title}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.title && Boolean(errors.title)}
-            helperText={touched.title && errors.title}
-          />
-          <Tooltip title='Save Changes'>
-            <IconButton onClick={editProjectHandler}>
-              <CheckIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title='Cancel Editing'>
-            <IconButton onClick={() => editingHandler('title', false)}>
-              <ClearIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      ) : (
-        <>
-          <Typography variant='h3'>{project.title}</Typography>
-          <Tooltip title='Edit Title'>
-            <IconButton onClick={() => editingHandler('title', true)}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      )}
-
-      <Typography variant='h3'>Description</Typography>
-      {isEditing.description ? (
-        <>
-          <TextField
-            size='small'
-            id='outlined-required'
-            label='Description'
-            name='description'
-            value={values.description}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.description && Boolean(errors.description)}
-            helperText={touched.description && errors.description}
-          />
-          <Tooltip title='Save Changes'>
-            <IconButton onClick={editProjectHandler}>
-              <CheckIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title='Cancel Editing'>
-            <IconButton onClick={() => editingHandler('description', false)}>
-              <ClearIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      ) : (
-        <>
-          <Typography variant='h5'>{project.description}</Typography>
-          <Tooltip title='Edit Description'>
-            <IconButton onClick={() => editingHandler('description', true)}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      )}
-
-      <Typography variant='h3'>Members</Typography>
-      {isEditing.members ? (
-        <>
-          <MembersSelect
-            editMode={true}
-            defaultMembers={project.members}
-            onChange={changeMemberHandler}
-          />
-          <Tooltip title='Save Changes'>
-            <IconButton onClick={editProjectHandler}>
-              <CheckIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title='Cancel Editing'>
-            <IconButton onClick={() => editingHandler('members', false)}>
-              <ClearIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      ) : (
-        <>
-          {project.members &&
-            project.members.map((member, index) => (
-              <p key={index}>
-                {member.firstName} {member.lastName}
-              </p>
-            ))}
-          <Tooltip title='Edit Members'>
-            <IconButton onClick={() => editingHandler('members', true)}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      )}
-      <Typography variant='h3'>Tasks</Typography>
-      {isAddingTask ? (
-        <>
-          <Tooltip title='Cancel Adding'>
-            <IconButton onClick={toggleTaskFormHandler}>
-              <ClearIcon />
-            </IconButton>
-          </Tooltip>
-          <NewTaskForm
-            id={id}
-            projectMembers={project.members}
-            addTaskHandler={setIsAddingTask}
-            setProject={setProject}
-          />
-        </>
-      ) : (
-        <Tooltip title='Add Task'>
-          <IconButton onClick={toggleTaskFormHandler}>
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+    <Grid container height='100vh' xs={12}>
+      <Grid container item xs={6} alignItems='center' justifyContent='center'>
+        {isEditing.title ? (
+          <>
+            <TextField
+              size='small'
+              id='outlined-required'
+              label='Title'
+              name='title'
+              value={values.title}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.title && Boolean(errors.title)}
+              helperText={touched.title && errors.title}
+            />
+            <Tooltip title='Save Changes'>
+              <IconButton onClick={editProjectHandler}>
+                <CheckIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Cancel Editing'>
+              <IconButton onClick={() => editingHandler('title', false)}>
+                <ClearIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        ) : (
+          <>
+            <Typography variant='h3'>{project.title}</Typography>
+            <Tooltip title='Edit Title'>
+              <IconButton onClick={() => editingHandler('title', true)}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
+        <Grid item xs={4}>
+          <Button
+            variant='contained'
+            color='error'
+            onClick={deleteProjectHandler}
+          >
+            Delete Project
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid container item xs={5} alignItems='center' justifyContent='center'>
+        {isEditing.description ? (
+          <>
+            <TextField
+              size='small'
+              id='outlined-required'
+              label='Description'
+              name='description'
+              value={values.description}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.description && Boolean(errors.description)}
+              helperText={touched.description && errors.description}
+            />
+            <Tooltip title='Save Changes'>
+              <IconButton onClick={editProjectHandler}>
+                <CheckIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Cancel Editing'>
+              <IconButton onClick={() => editingHandler('description', false)}>
+                <ClearIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        ) : (
+          <>
+            <Typography variant='h5'>{project.description}</Typography>
+            <Tooltip title='Edit Description'>
+              <IconButton onClick={() => editingHandler('description', true)}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
+      </Grid>
+      <Grid
+        container
+        item
+        xs={12}
+        direction='column'
+        alignItems='center'
+        justifyContent='center'
+      >
+        <Grid container item xs={3} alignItems='center' justifyContent='center'>
+          <Typography variant='h3'>Members</Typography>
+          {isEditing.members === false && (
+            <Tooltip title='Edit Members'>
+              <IconButton onClick={() => editingHandler('members', true)}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+          {isEditing.members && (
+            <Tooltip title='Cancel Editing'>
+              <IconButton onClick={() => editingHandler('members', false)}>
+                <ClearIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Grid>
+        {isEditing.members ? (
+          <Grid
+            container
+            item
+            xs={8}
+            alignItems='center'
+            justifyContent='center'
+          >
+            <MembersSelect
+              editMode={true}
+              defaultMembers={project.members}
+              onChange={changeMemberHandler}
+            />
+            <Tooltip title='Save Changes'>
+              <IconButton onClick={editProjectHandler}>
+                <CheckIcon />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        ) : (
+          <>
+            <Grid
+              container
+              item
+              xs={9}
+              direction='column'
+              alignItems='center'
+              justifyContent='flex-start'
+            >
+              {project.members &&
+                project.members.map((member, index) => (
+                  <p key={index}>
+                    {member.firstName} {member.lastName}
+                  </p>
+                ))}
+            </Grid>
+          </>
+        )}
+      </Grid>
+      <Grid container item xs={12} direction='column'>
+        <Grid container item xs={3} alignItems='center' justifyContent='center'>
+          <Typography variant='h3'>Tasks</Typography>
+          {isAddingTask === false && (
+            <Tooltip title='Add Task'>
+              <IconButton onClick={toggleTaskFormHandler}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+          {isAddingTask && (
+            <Tooltip title='Cancel Adding'>
+              <IconButton onClick={toggleTaskFormHandler}>
+                <ClearIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Grid>
+        {isAddingTask && (
+          <Grid
+            container
+            item
+            xs={8}
+            alignItems='center'
+            justifyContent='center'
+          >
+            <NewTaskForm
+              id={id}
+              projectMembers={project.members}
+              addTaskHandler={setIsAddingTask}
+              setProject={setProject}
+            />
+          </Grid>
+        )}
+      </Grid>
       {project.tasks && <TaskTable taskData={project.tasks} />}
-    </>
+    </Grid>
   );
 }
 

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Grid, Stack, Typography, TextField, Button } from '@mui/material/';
 import FormPaper from '../styles/FormPaper';
+import bgImage from '../images/cloudbg.jpg';
 
 function LogIn() {
   const dispatch = useDispatch();
@@ -37,6 +38,8 @@ function LogIn() {
       onSubmit,
     });
 
+  const styles = { fontFamily: 'Train One, cursive' };
+
   return (
     <Grid
       container
@@ -45,10 +48,17 @@ function LogIn() {
       alignItems='center'
       justifyContent='center'
       textAlign='center'
-      sx={{ minHeight: '100vh' }}
+      sx={{
+        minHeight: '100vh',
+        backgroundImage: `url(${bgImage})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+      }}
     >
       <Grid item xs={3}>
-        <Typography variant='h3'>Today</Typography>
+        <Typography variant='title' sx={{ color: 'white' }}>
+          Today
+        </Typography>
         <FormPaper elevation={3} sx={{ width: 375, height: 400 }}>
           <form onSubmit={handleSubmit}>
             <Stack

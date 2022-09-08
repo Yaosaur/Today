@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { projectsActions } from '../store/projects-slice';
 import { logOut } from '../store/auth-slice';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,8 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 
 function Navi() {
+  const firstName = useSelector(state => state.auth.user.firstName);
+  const lastName = useSelector(state => state.auth.user.lastName);
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -33,9 +35,11 @@ function Navi() {
         justifyContent='space-around'
         alignItems='center'
       >
-        <Typography variant='h2'>Today</Typography>
-        <Avatar sx={{ width: 70, height: 70 }}>DU</Avatar>
-        <Typography variant='h5'>Demo User</Typography>
+        <Typography variant='title'>Today</Typography>
+        <Avatar sx={{ width: 70, height: 70 }}>
+          {firstName[0]} {lastName[0]}
+        </Avatar>
+        <Typography variant='h5'>{`${firstName} ${lastName}`}</Typography>
       </Box>
       <Box display='flex' justifyContent='space-between'>
         <Typography variant='h4'>Projects</Typography>

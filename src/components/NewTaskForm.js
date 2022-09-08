@@ -6,7 +6,7 @@ import newTaskSchema from '../schemas/newTask';
 import { createTask } from '../services/tasks-api';
 import { projectsActions } from '../store/projects-slice';
 
-import { TextField, MenuItem, Button } from '@mui/material';
+import { Grid, TextField, MenuItem, Button } from '@mui/material';
 import MembersSelect from './MembersSelect';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -59,77 +59,84 @@ function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <TextField
-        size='small'
-        id='outlined-required'
-        label='Title'
-        placeholder='Title'
-        name='title'
-        value={values.title}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.title && Boolean(errors.title)}
-        helperText={touched.title && errors.title}
-      />
-      <TextField
-        size='small'
-        multiline
-        id='outlined-description-input'
-        label='Description'
-        placeholder='Description'
-        name='description'
-        value={values.description}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.description && Boolean(errors.description)}
-        helperText={touched.description && errors.description}
-      />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DesktopDatePicker
-          label='Deadline'
-          inputFormat='MM/DD/YYYY'
-          minDate={new Date().toISOString().split('T')[0]}
-          value={values.deadline}
-          onChange={value => {
-            setFieldValue(
-              'deadline',
-              new Date(Date.parse(value)).toISOString()
-            );
-          }}
-          renderInput={params => <TextField {...params} />}
+      <Grid container justifyContent='center'>
+        <TextField
+          size='small'
+          id='outlined-required'
+          label='Title'
+          placeholder='Title'
+          name='title'
+          value={values.title}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.title && Boolean(errors.title)}
+          helperText={touched.title && errors.title}
+          sx={{ ml: 1.5, mr: 1.5 }}
         />
-      </LocalizationProvider>
-      <MembersSelect
-        memberOptions={projectMembers}
-        onChange={changeMemberHandler}
-        errMsg={errMsg}
-      />
-      <TextField
-        id='type'
-        select
-        label='Type'
-        name='type'
-        value={values.type}
-        onChange={handleChange}
-      >
-        <MenuItem value={'New Feature'}>New Feature</MenuItem>
-        <MenuItem value={'Bug Fix'}>Bug Fix</MenuItem>
-      </TextField>
-      <TextField
-        id='priority'
-        select
-        label='Priority'
-        name='priority'
-        value={values.priority}
-        onChange={handleChange}
-      >
-        <MenuItem value={'Low'}>Low</MenuItem>
-        <MenuItem value={'Medium'}>Medium</MenuItem>
-        <MenuItem value={'High'}>High</MenuItem>
-      </TextField>
-      <Button variant='contained' type='submit'>
-        Create Task
-      </Button>
+        <TextField
+          size='small'
+          multiline
+          id='outlined-description-input'
+          label='Description'
+          placeholder='Description'
+          name='description'
+          value={values.description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.description && Boolean(errors.description)}
+          helperText={touched.description && errors.description}
+          sx={{ ml: 1.5, mr: 1.5 }}
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DesktopDatePicker
+            label='Deadline'
+            inputFormat='MM/DD/YYYY'
+            minDate={new Date().toISOString().split('T')[0]}
+            value={values.deadline}
+            sx={{ ml: 1.5, mr: 1.5 }}
+            onChange={value => {
+              setFieldValue(
+                'deadline',
+                new Date(Date.parse(value)).toISOString()
+              );
+            }}
+            renderInput={params => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+        <MembersSelect
+          memberOptions={projectMembers}
+          onChange={changeMemberHandler}
+          errMsg={errMsg}
+        />
+        <TextField
+          id='type'
+          select
+          label='Type'
+          name='type'
+          value={values.type}
+          onChange={handleChange}
+          sx={{ ml: 1.5, mr: 1.5 }}
+        >
+          <MenuItem value={'New Feature'}>New Feature</MenuItem>
+          <MenuItem value={'Bug Fix'}>Bug Fix</MenuItem>
+        </TextField>
+        <TextField
+          id='priority'
+          select
+          label='Priority'
+          name='priority'
+          value={values.priority}
+          onChange={handleChange}
+          sx={{ ml: 1.5, mr: 1.5 }}
+        >
+          <MenuItem value={'Low'}>Low</MenuItem>
+          <MenuItem value={'Medium'}>Medium</MenuItem>
+          <MenuItem value={'High'}>High</MenuItem>
+        </TextField>
+        <Button variant='contained' type='submit' sx={{ mt: 1.5, mb: 1.5 }}>
+          Create Task
+        </Button>
+      </Grid>
     </form>
   );
 }
