@@ -1,4 +1,4 @@
-import { minWidth } from '@mui/system';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 
 function dateTransformer(date) {
@@ -9,6 +9,9 @@ function dateTransformer(date) {
 }
 
 function TaskTable(props) {
+  const nav = useNavigate();
+  const location = useLocation();
+
   const columns = [
     {
       field: 'title',
@@ -52,6 +55,9 @@ function TaskTable(props) {
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
+        onRowClick={params => {
+          nav(location.pathname + `/tasks/${params.id}`);
+        }}
       />
     </div>
   );
