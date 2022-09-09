@@ -38,8 +38,6 @@ function LogIn() {
       onSubmit,
     });
 
-  const styles = { fontFamily: 'Train One, cursive' };
-
   return (
     <Grid
       container

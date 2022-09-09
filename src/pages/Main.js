@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Navi from '../components/Navi';
 import { Grid } from '@mui/material';
-import cloudbg from '../images/cloudbg.jpg';
 import projectbg from '../images/projectbg.jpg';
 
 function Main() {

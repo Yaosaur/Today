@@ -96,7 +96,7 @@ function Project() {
   };
 
   return (
-    <Grid container height='100vh' xs={12}>
+    <Grid container height='100vh'>
       <Grid container item xs={6} alignItems='center' justifyContent='center'>
         {isEditing.title ? (
           <>
@@ -227,7 +227,7 @@ function Project() {
             <Grid
               container
               item
-              xs={9}
+              xs={6}
               direction='column'
               alignItems='center'
               justifyContent='flex-start'

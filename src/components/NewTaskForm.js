@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import newTaskSchema from '../schemas/newTask';
 import { createTask } from '../services/tasks-api';
