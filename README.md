@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Today
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Today is a project management app meant to be used with the [Today API](https://github.com/Yaosaur/Today-API) to help users collaborate and keep track of tasks that need to be completed for their projects.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+Users will be able to:
 
-### `npm start`
+- Register
+- Login and stayed logged in upon page closure (for up to 8 hours)
+- Logout
+- View all projects they either created or participating in
+- Create new projects and add members to the project
+- Edit and update existing projects
+- Delete projects
+- Add new tasks for a project
+- View, sort, and filter tasks on a project
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Additional features for the future:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- A task page to edit and add comments
+- Deleting a task on the project page
+- The abilities to add, edit, and delete a comment
+- Ability for users to add images for their avatars and comments
+- Incorporating chat/messaging for user collaboration
 
-### `npm test`
+## Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React/Redux(Toolkit)
+- Formik and Yup
+- Material UI/(Day/Date-Io for date picker)
 
-### `npm run build`
+## Interacting with the App
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The project is currently hosted [here](https://today-pm.herokuapp.com/).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+For you to interact with the program on your local computer, please clone to your IDE using
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+git clone https://github.com/Yaosaur/Today.git
+```
 
-### `npm run eject`
+After cloning, install the required NPM packages using
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributing
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Currently not accepting any contributions as the backend is not complete and the front end will need to be updated because of it
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Credits
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Background image from [here](https://www.freepik.com/free-vector/gorgeous-clouds-background-with-blue-sky-design_8562848.htm#query=cloud%20background&position=3&from_view=keyword)
