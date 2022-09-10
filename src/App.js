@@ -9,6 +9,7 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import DashBoard from './pages/DashBoard';
 import NewProjectForm from './pages/NewProjectForm';
 import Project from './pages/Project';
+import Task from './pages/Task';
 
 const customTheme = createTheme(theme);
 
@@ -21,6 +22,10 @@ function App() {
             <Route path='/' element={<DashBoard />} />
             <Route path='newproject' element={<NewProjectForm />} />
             <Route path='projects/:id' element={<Project />} />
+            <Route
+              path='projects/:projectId/tasks/:taskId'
+              element={<Task />}
+            />
           </Route>
           <Route path='/' element={<AuthRoute />}>
             <Route path='/login' element={<LogIn />} />

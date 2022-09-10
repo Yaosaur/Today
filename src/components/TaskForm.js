@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 import newTaskSchema from '../schemas/newTask';
 import { createTask } from '../services/tasks-api';
 import { projectsActions } from '../store/projects-slice';
+import { editTask } from '../services/tasks-api';
+import { useParams } from 'react-router-dom';
 
 import { Grid, TextField, MenuItem, Button } from '@mui/material';
 import MembersSelect from './MembersSelect';
@@ -11,29 +13,50 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
+function TaskForm({
+  id,
+  taskHandler,
+  setProject,
+  defaultValues,
+  editingHandler,
+  memberOptions,
+}) {
   const dispatch = useDispatch();
+  const { projectId, taskId } = useParams();
   const [assignedTo, setAssignment] = useState([]);
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState(null);
 
   const changeMemberHandler = members => {
     setAssignment(members);
-    if (assignedTo.length === 1) {
-      setErrMsg('');
-    }
+    return setErrMsg(null);
   };
 
   const onSubmit = values => {
-    if (assignedTo.length === 0) {
-      setErrMsg('Assign this task to at least one member');
-      return;
-    } else {
-      createTask(id, { ...values, assignedTo }).then(data => {
-        setProject(data.data);
-        dispatch(projectsActions.editProject(data.data));
-        addTaskHandler(false);
+    if (defaultValues) {
+      editTask(projectId, taskId, { ...values, assignedTo }).then(data => {
+        taskHandler(data.data);
+        editingHandler(false);
       });
+    } else {
+      if (assignedTo.length === 0) {
+        setErrMsg('Assign this task to at least one member');
+        return;
+      } else {
+        createTask(id, { ...values, assignedTo }).then(data => {
+          setProject(data.data);
+          dispatch(projectsActions.editProject(data.data));
+          taskHandler(false);
+        });
+      }
     }
+  };
+
+  const initialValues = {
+    title: defaultValues ? defaultValues.title : '',
+    description: defaultValues ? defaultValues.description : '',
+    deadline: defaultValues ? defaultValues.deadline : new Date(),
+    priority: defaultValues ? defaultValues.priority : 'Low',
+    type: defaultValues ? defaultValues.type : 'New Feature',
   };
 
   const {
@@ -45,13 +68,7 @@ function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
     handleBlur,
     handleSubmit,
   } = useFormik({
-    initialValues: {
-      title: '',
-      description: '',
-      deadline: new Date(),
-      priority: 'Low',
-      type: 'New Feature',
-    },
+    initialValues,
     validationSchema: newTaskSchema,
     onSubmit,
   });
@@ -103,7 +120,8 @@ function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
           />
         </LocalizationProvider>
         <MembersSelect
-          memberOptions={projectMembers}
+          memberOptions={memberOptions}
+          defaultMembers={defaultValues && defaultValues.assignedTo}
           onChange={changeMemberHandler}
           errMsg={errMsg}
         />
@@ -132,12 +150,18 @@ function NewTaskForm({ id, projectMembers, addTaskHandler, setProject }) {
           <MenuItem value={'Medium'}>Medium</MenuItem>
           <MenuItem value={'High'}>High</MenuItem>
         </TextField>
-        <Button variant='contained' type='submit' sx={{ mt: 1.5, mb: 1.5 }}>
-          Create Task
-        </Button>
+        {defaultValues ? (
+          <Button variant='contained' type='submit' sx={{ mt: 1.5, mb: 1.5 }}>
+            Edit Task
+          </Button>
+        ) : (
+          <Button variant='contained' type='submit' sx={{ mt: 1.5, mb: 1.5 }}>
+            Create Task
+          </Button>
+        )}
       </Grid>
     </form>
   );
 }
 
-export default NewTaskForm;
+export default TaskForm;

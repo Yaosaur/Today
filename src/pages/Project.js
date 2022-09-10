@@ -9,7 +9,7 @@ import { editProject } from '../services/projects-api';
 import { deleteProject } from '../services/projects-api';
 
 import MembersSelect from '../components/MembersSelect';
-import NewTaskForm from '../components/NewTaskForm';
+import TaskForm from '../components/TaskForm';
 import {
   Grid,
   Typography,
@@ -268,16 +268,18 @@ function Project() {
             alignItems='center'
             justifyContent='center'
           >
-            <NewTaskForm
+            <TaskForm
               id={id}
-              projectMembers={project.members}
-              addTaskHandler={setIsAddingTask}
+              memberOptions={project.members}
+              taskHandler={setIsAddingTask}
               setProject={setProject}
             />
           </Grid>
         )}
       </Grid>
-      {project.tasks && <TaskTable taskData={project.tasks} />}
+      {project.tasks && (
+        <TaskTable taskData={project.tasks} memberOptions={project.members} />
+      )}
     </Grid>
   );
 }
