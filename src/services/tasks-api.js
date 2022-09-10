@@ -10,6 +10,10 @@ export const createTask = (id, data) => {
   return axios.post(`${baseURL}/projects/${id}/tasks`, data);
 };
 
+export const editTask = (projectId, taskId, data) => {
+  return axios.put(`${baseURL}/projects/${projectId}/tasks/${taskId}`, data);
+};
+
 export const deleteTask = (id, taskId) => {
   return axios.delete(`${baseURL}/projects/${id}/tasks/${taskId}`);
 };
