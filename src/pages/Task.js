@@ -16,8 +16,20 @@ function Task() {
   const project = useSelector(state =>
     state.projects.projects.find(project => project._id === projectId)
   );
-  const [task, setTask] = useState();
+  const [task, setTask] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+
+  const {
+    title,
+    description,
+    issuer,
+    assignedTo,
+    dateCreated,
+    deadline,
+    priority,
+    type,
+    status,
+  } = task;
 
   useEffect(() => {
     getTask(projectId, taskId).then(data => setTask(data.data));
@@ -30,10 +42,26 @@ function Task() {
     });
   };
 
+  console.log(assignedTo);
+
   return (
     <div>
       {!isEditing && (
         <>
+          <div>{title}</div>
+          <div>{description}</div>
+          <div>{issuer && issuer.email}</div>
+          <div>
+            {assignedTo &&
+              assignedTo.map((member, index) => (
+                <p key={index}>{member.email}</p>
+              ))}
+          </div>
+          <div>{dateCreated}</div>
+          <div>{deadline}</div>
+          <div>{priority}</div>
+          <div>{type}</div>
+          <div>{status}</div>
           <Tooltip title='Edit Task'>
             <IconButton onClick={() => setIsEditing(true)}>
               <EditIcon />
@@ -44,6 +72,7 @@ function Task() {
       {isEditing && (
         <TaskForm
           taskHandler={setTask}
+          editingHandler={setIsEditing}
           defaultValues={task}
           memberOptions={project.members}
         />

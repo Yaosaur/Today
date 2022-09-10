@@ -33,7 +33,7 @@ function TaskForm({
 
   const onSubmit = values => {
     if (defaultValues) {
-      editTask(projectId, taskId, values).then(data => {
+      editTask(projectId, taskId, { ...values, assignedTo }).then(data => {
         taskHandler(data.data);
         editingHandler(false);
       });
