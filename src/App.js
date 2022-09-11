@@ -21,7 +21,7 @@ function App() {
           <Route path='/' element={<ProtectedRoute />}>
             <Route path='/' element={<DashBoard />} />
             <Route path='newproject' element={<NewProjectForm />} />
-            <Route path='projects/:id' element={<Project />} />
+            <Route path='projects/:projectId' element={<Project />} />
             <Route
               path='projects/:projectId/tasks/:taskId'
               element={<Task />}

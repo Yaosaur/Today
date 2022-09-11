@@ -31,7 +31,7 @@ function MembersSelect(props) {
         getOptionLabel={option => option.email}
         defaultValue={props.defaultMembers}
         isOptionEqualToValue={(option, value) => option.email === value.email}
-        sx={{ ml: 1.5, mr: 1.5, width: 400 }}
+        sx={{ ml: 1.5, mr: 1.5, width: 300 }}
         onChange={(event, value) => {
           props.onChange(value);
         }}

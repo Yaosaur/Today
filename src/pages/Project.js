@@ -25,7 +25,7 @@ import AddIcon from '@mui/icons-material/Add';
 import TaskTable from '../components/TaskTable';
 
 function Project() {
-  const { id } = useParams();
+  const { projectId } = useParams();
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [project, setProject] = useState({});
@@ -44,10 +44,10 @@ function Project() {
       members: false,
     });
     setIsAddingTask(false);
-    getProject(id).then(data => {
+    getProject(projectId).then(data => {
       setProject(data.data);
     });
-  }, [id]);
+  }, [projectId]);
 
   const { values, touched, errors, handleChange, handleBlur } = useFormik({
     enableReinitialize: true,
@@ -73,7 +73,7 @@ function Project() {
   };
 
   const editProjectHandler = () => {
-    editProject(id, { ...values, members }).then(data => {
+    editProject(projectId, { ...values, members }).then(data => {
       dispatch(projectsActions.editProject(data.data));
       setProject(data.data);
       setIsEditing({
@@ -85,7 +85,7 @@ function Project() {
   };
 
   const deleteProjectHandler = () => {
-    deleteProject(id).then(data => {
+    deleteProject(projectId).then(data => {
       dispatch(projectsActions.removeFromProjects(data.data));
       nav('/', { replace: true });
     });
@@ -102,7 +102,7 @@ function Project() {
           <>
             <TextField
               size='small'
-              id='outlined-required'
+              projectId='outlined-required'
               label='Title'
               name='title'
               value={values.title}
@@ -147,7 +147,7 @@ function Project() {
           <>
             <TextField
               size='small'
-              id='outlined-required'
+              projectId='outlined-required'
               label='Description'
               name='description'
               value={values.description}
@@ -269,7 +269,6 @@ function Project() {
             justifyContent='center'
           >
             <TaskForm
-              id={id}
               memberOptions={project.members}
               taskHandler={setIsAddingTask}
               setProject={setProject}

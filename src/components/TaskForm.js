@@ -14,7 +14,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 function TaskForm({
-  id,
   taskHandler,
   setProject,
   defaultValues,
@@ -33,7 +32,7 @@ function TaskForm({
 
   const onSubmit = values => {
     if (defaultValues) {
-      editTask(projectId, taskId, { ...values, assignedTo }).then(data => {
+      editTask(taskId, { ...values, assignedTo }).then(data => {
         taskHandler(data.data);
         editingHandler(false);
       });
@@ -42,7 +41,7 @@ function TaskForm({
         setErrMsg('Assign this task to at least one member');
         return;
       } else {
-        createTask(id, { ...values, assignedTo }).then(data => {
+        createTask(projectId, { ...values, assignedTo }).then(data => {
           setProject(data.data);
           dispatch(projectsActions.editProject(data.data));
           taskHandler(false);
@@ -57,6 +56,7 @@ function TaskForm({
     deadline: defaultValues ? defaultValues.deadline : new Date(),
     priority: defaultValues ? defaultValues.priority : 'Low',
     type: defaultValues ? defaultValues.type : 'New Feature',
+    status: defaultValues ? defaultValues.status : 'In Progress',
   };
 
   const {
@@ -135,7 +135,7 @@ function TaskForm({
           sx={{ ml: 1.5, mr: 1.5 }}
         >
           <MenuItem value={'New Feature'}>New Feature</MenuItem>
-          <MenuItem value={'Bug Fix'}>Bug Fix</MenuItem>
+          <MenuItem value={'Issue'}>Issue</MenuItem>
         </TextField>
         <TextField
           id='priority'
@@ -150,6 +150,20 @@ function TaskForm({
           <MenuItem value={'Medium'}>Medium</MenuItem>
           <MenuItem value={'High'}>High</MenuItem>
         </TextField>
+        {defaultValues && (
+          <TextField
+            id='status'
+            select
+            label='Status'
+            name='status'
+            value={values.status}
+            onChange={handleChange}
+            sx={{ ml: 1.5, mr: 1.5 }}
+          >
+            <MenuItem value={'In Progress'}>In Progress</MenuItem>
+            <MenuItem value={'Complete'}>Complete</MenuItem>
+          </TextField>
+        )}
         {defaultValues ? (
           <Button variant='contained' type='submit' sx={{ mt: 1.5, mb: 1.5 }}>
             Edit Task

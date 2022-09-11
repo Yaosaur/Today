@@ -32,8 +32,8 @@ function Task() {
   } = task;
 
   useEffect(() => {
-    getTask(projectId, taskId).then(data => setTask(data.data));
-  }, [projectId, taskId]);
+    getTask(taskId).then(data => setTask(data.data));
+  }, [taskId]);
 
   const deleteTaskHandler = () => {
     deleteTask(projectId, taskId).then(data => {
@@ -41,8 +41,6 @@ function Task() {
       nav(`/projects/${projectId}`, { replace: true });
     });
   };
-
-  console.log(assignedTo);
 
   return (
     <div>

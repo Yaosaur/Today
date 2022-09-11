@@ -16,7 +16,7 @@ function TaskTable(props) {
     {
       field: 'title',
       headerName: 'Title',
-      minWidth: 200,
+      minWidth: 175,
       flex: 1,
       textAlign: 'center',
     },
@@ -30,6 +30,7 @@ function TaskTable(props) {
     },
     { field: 'priority', headerName: 'Priority', width: 90 },
     { field: 'type', headerName: 'Type', minWidth: 150 },
+    { field: 'status', headerName: 'Status', minWidth: 150 },
   ];
 
   let transformedData = props.taskData.map(task => {

@@ -2,18 +2,18 @@ import axios from 'axios';
 
 let baseURL = 'http://localhost:5000';
 
-export const getTask = (projectId, taskId) => {
-  return axios.get(`${baseURL}/projects/${projectId}/tasks/${taskId}`);
+export const getTask = taskId => {
+  return axios.get(`${baseURL}/tasks/${taskId}`);
 };
 
-export const createTask = (id, data) => {
-  return axios.post(`${baseURL}/projects/${id}/tasks`, data);
+export const createTask = (projectId, data) => {
+  return axios.post(`${baseURL}/tasks/${projectId}/`, data);
 };
 
-export const editTask = (projectId, taskId, data) => {
-  return axios.put(`${baseURL}/projects/${projectId}/tasks/${taskId}`, data);
+export const editTask = (taskId, data) => {
+  return axios.put(`${baseURL}/tasks/${taskId}`, data);
 };
 
-export const deleteTask = (id, taskId) => {
-  return axios.delete(`${baseURL}/projects/${id}/tasks/${taskId}`);
+export const deleteTask = (projectId, taskId) => {
+  return axios.delete(`${baseURL}/tasks/${projectId}/${taskId}`);
 };
