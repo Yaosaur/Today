@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 
 function dateTransformer(date) {
@@ -8,11 +8,10 @@ function dateTransformer(date) {
   return `${month}-${day}-${year}`;
 }
 
-function TaskTable(props) {
+function TaskTable({ taskData, memberOptions, project }) {
   const nav = useNavigate();
-  const location = useLocation();
 
-  const columns = [
+  const projectPage = [
     {
       field: 'title',
       headerName: 'Title',
@@ -21,7 +20,7 @@ function TaskTable(props) {
       textAlign: 'center',
     },
     { field: 'issuer', headerName: 'Issuer', width: 130 },
-    { field: 'assignedTo', headerName: 'Assigned To', minWidth: 200, flex: 1 },
+    { field: 'assignedTo', headerName: 'Assigned To', minWidth: 150, flex: 1 },
     { field: 'dateCreated', headerName: 'Date Created', width: 200 },
     {
       field: 'deadline',
@@ -33,13 +32,32 @@ function TaskTable(props) {
     { field: 'status', headerName: 'Status', minWidth: 150 },
   ];
 
-  let transformedData = props.taskData.map(task => {
+  const tasksPage = [
+    {
+      field: 'project',
+      headerName: 'Project',
+      minWidth: 175,
+      flex: 1,
+      textAlign: 'center',
+    },
+    ...projectPage,
+  ];
+
+  let columns;
+  if (project) {
+    columns = projectPage;
+  } else {
+    columns = tasksPage;
+  }
+
+  let transformedData = taskData.map(task => {
     let transformedMembers = task.assignedTo
       .map(member => `${member.firstName} ${member.lastName}`)
       .join(', ');
     return {
       ...task,
       id: task._id,
+      project: task.project.title,
       issuer: `${task.issuer.firstName} ${task.issuer.lastName}`,
       assignedTo: transformedMembers,
       dateCreated: dateTransformer(task.dateCreated),
@@ -52,12 +70,13 @@ function TaskTable(props) {
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
+        autoHeight
         rows={rows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
         onRowClick={params => {
-          nav(location.pathname + `/tasks/${params.id}`);
+          nav(`/tasks/${params.id}`);
         }}
       />
     </div>

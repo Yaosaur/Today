@@ -277,7 +277,11 @@ function Project() {
         )}
       </Grid>
       {project.tasks && (
-        <TaskTable taskData={project.tasks} memberOptions={project.members} />
+        <TaskTable
+          taskData={project.tasks}
+          memberOptions={project.members}
+          project={true}
+        />
       )}
     </Grid>
   );

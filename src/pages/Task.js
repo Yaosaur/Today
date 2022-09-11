@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getTask, deleteTask } from '../services/tasks-api';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { projectsActions } from '../store/projects-slice';
 
 import TaskForm from '../components/TaskForm';
@@ -12,14 +12,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 function Task() {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const { projectId, taskId } = useParams();
-  const project = useSelector(state =>
-    state.projects.projects.find(project => project._id === projectId)
-  );
+  const { taskId } = useParams();
   const [task, setTask] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
 
   const {
+    project,
     title,
     description,
     issuer,
@@ -36,9 +34,9 @@ function Task() {
   }, [taskId]);
 
   const deleteTaskHandler = () => {
-    deleteTask(projectId, taskId).then(data => {
+    deleteTask(project._id, taskId).then(data => {
       dispatch(projectsActions.editProject(data.data));
-      nav(`/projects/${projectId}`, { replace: true });
+      nav(`/projects/${project._id}`, { replace: true });
     });
   };
 

@@ -2,6 +2,10 @@ import axios from 'axios';
 
 let baseURL = 'http://localhost:5000';
 
+export const getTasks = () => {
+  return axios.get(`${baseURL}/tasks/`);
+};
+
 export const getTask = taskId => {
   return axios.get(`${baseURL}/tasks/${taskId}`);
 };
