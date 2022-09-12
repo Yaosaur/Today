@@ -6,6 +6,7 @@ import { logOut } from '../store/auth-slice';
 
 import NaviItem from '../components/NaviItem';
 import { Avatar, Button } from '@mui/material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import FolderIcon from '@mui/icons-material/Folder';
 import TaskIcon from '@mui/icons-material/Task';
 import { styled, useTheme } from '@mui/material/styles';
@@ -84,8 +85,12 @@ function Navi() {
     setOpen(false);
   };
 
-  const projectPageHandler = () => {
+  const homePageHandler = () => {
     nav('/');
+  };
+
+  const projectPageHandler = () => {
+    nav('/projects');
   };
 
   const taskPageHandler = () => {
@@ -153,6 +158,9 @@ function Navi() {
         </Box>
         <Divider />
         <List>
+          <NaviItem text={'Dashboard'} onClick={homePageHandler}>
+            <DashboardIcon />
+          </NaviItem>
           <NaviItem text={'Projects'} onClick={projectPageHandler}>
             <FolderIcon />
           </NaviItem>

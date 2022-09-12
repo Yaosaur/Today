@@ -1,3 +1,5 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 
@@ -7,6 +9,7 @@ import Register from './pages/Register';
 import LogIn from './pages/LogIn';
 import ProtectedRoute from './utils/ProtectedRoute';
 import DashBoard from './pages/DashBoard';
+import Projects from './pages/Projects';
 import NewProjectForm from './pages/NewProjectForm';
 import Project from './pages/Project';
 import Tasks from './pages/Tasks';
@@ -21,6 +24,7 @@ function App() {
         <Routes>
           <Route path='/' element={<ProtectedRoute />}>
             <Route path='/' element={<DashBoard />} />
+            <Route path='/projects' element={<Projects />} />
             <Route path='newproject' element={<NewProjectForm />} />
             <Route path='projects/:projectId' element={<Project />} />
             <Route path='tasks/:taskId' element={<Task />} />

@@ -7,12 +7,11 @@ function ProjectTable({ projectData }) {
     {
       field: 'title',
       headerName: 'Title',
-      minWidth: 175,
+      minWidth: 130,
       flex: 1,
-      textAlign: 'center',
     },
-    { field: 'description', headerName: 'Description', width: 130 },
-    { field: 'members', headerName: 'Members', minWidth: 200, flex: 1 },
+    { field: 'description', headerName: 'Description', minWidth: 130, flex: 1 },
+    { field: 'members', headerName: 'Members', minWidth: 130, flex: 1 },
   ];
 
   let transformedData = projectData.map(project => {

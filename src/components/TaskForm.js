@@ -56,7 +56,7 @@ function TaskForm({
     deadline: defaultValues ? defaultValues.deadline : new Date(),
     priority: defaultValues ? defaultValues.priority : 'Low',
     type: defaultValues ? defaultValues.type : 'New Feature',
-    status: defaultValues ? defaultValues.status : 'In Progress',
+    status: defaultValues ? defaultValues.status : 'New',
   };
 
   const {
@@ -160,6 +160,7 @@ function TaskForm({
             onChange={handleChange}
             sx={{ ml: 1.5, mr: 1.5 }}
           >
+            <MenuItem value={'New'}>New</MenuItem>
             <MenuItem value={'In Progress'}>In Progress</MenuItem>
             <MenuItem value={'Complete'}>Complete</MenuItem>
           </TextField>
