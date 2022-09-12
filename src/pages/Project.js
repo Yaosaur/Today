@@ -12,6 +12,7 @@ import MembersSelect from '../components/MembersSelect';
 import TaskForm from '../components/TaskForm';
 import {
   Grid,
+  CircularProgress,
   Typography,
   Tooltip,
   IconButton,
@@ -28,6 +29,7 @@ function Project() {
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [project, setProject] = useState({});
   const [members, setMembers] = useState([]);
   const [isEditing, setIsEditing] = useState({
@@ -35,7 +37,7 @@ function Project() {
     description: false,
     members: false,
   });
-  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [isAddingTask, setIsAddingTask] = useState(true);
 
   useEffect(() => {
     setIsEditing({
@@ -46,6 +48,7 @@ function Project() {
     setIsAddingTask(false);
     getProject(projectId).then(data => {
       setProject(data.data);
+      setIsLoading(false);
     });
   }, [projectId]);
 
@@ -61,10 +64,13 @@ function Project() {
   const editingHandler = (type, state) => {
     if (type === 'title') {
       setIsEditing(prevState => ({ ...prevState, title: state }));
+      setMembers(project.members);
     } else if (type === 'description') {
       setIsEditing(prevState => ({ ...prevState, description: state }));
+      setMembers(project.members);
     } else if (type === 'members') {
       setIsEditing(prevState => ({ ...prevState, members: state }));
+      setMembers(project.members);
     }
   };
 
@@ -95,14 +101,13 @@ function Project() {
     setIsAddingTask(prevState => !prevState);
   };
 
-  return (
-    <Grid container height='100vh'>
+  const mainContent = (
+    <>
       <Grid container item xs={6} alignItems='center' justifyContent='center'>
         {isEditing.title ? (
           <>
             <TextField
               size='small'
-              projectId='outlined-required'
               label='Title'
               name='title'
               value={values.title}
@@ -147,7 +152,6 @@ function Project() {
           <>
             <TextField
               size='small'
-              projectId='outlined-required'
               label='Description'
               name='description'
               value={values.description}
@@ -283,6 +287,18 @@ function Project() {
           project={true}
         />
       )}
+    </>
+  );
+
+  return (
+    <Grid
+      container
+      height='100%'
+      width='100%'
+      justifyContent='center'
+      alignItems='center'
+    >
+      {isLoading ? <CircularProgress size='7rem' /> : mainContent}
     </Grid>
   );
 }

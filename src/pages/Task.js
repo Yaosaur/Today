@@ -34,9 +34,9 @@ function Task() {
   }, [taskId]);
 
   const deleteTaskHandler = () => {
-    deleteTask(project._id, taskId).then(data => {
+    deleteTask(task.project, taskId).then(data => {
       dispatch(projectsActions.editProject(data.data));
-      nav(`/projects/${project._id}`, { replace: true });
+      nav(`/projects/${task.project}`, { replace: true });
     });
   };
 

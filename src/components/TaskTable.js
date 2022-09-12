@@ -8,7 +8,7 @@ function dateTransformer(date) {
   return `${month}-${day}-${year}`;
 }
 
-function TaskTable({ taskData, memberOptions, project }) {
+function TaskTable({ taskData, project }) {
   const nav = useNavigate();
 
   const projectPage = [
@@ -71,6 +71,7 @@ function TaskTable({ taskData, memberOptions, project }) {
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         autoHeight
+        localeText={{ noRowsLabel: 'No data to display' }}
         rows={rows}
         columns={columns}
         pageSize={5}

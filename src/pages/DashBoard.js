@@ -9,6 +9,8 @@ import PieChart, {
   Legend,
 } from 'devextreme-react/pie-chart';
 import { Typography, Grid, Paper } from '@mui/material';
+import nodatamorning from '../images/nodatamorning.gif';
+import { margin } from '@mui/system';
 
 function DashBoard() {
   const firstName = useSelector(state => state.auth.user.firstName);
@@ -75,25 +77,27 @@ function DashBoard() {
 
   const pieCharts = [
     {
-      title: 'Tickets by Priority',
+      title: 'Tasks by Priority',
       dataSource: priorityRatio,
     },
     {
-      title: 'Tickets by Status',
+      title: 'Tasks by Status',
       dataSource: statusRatio,
     },
     {
-      title: 'Tickets by Type',
+      title: 'Tasks by Type',
       dataSource: typeRatio,
     },
   ];
 
   const pies = pieCharts.map((options, i) => (
-    <Grid item>
-      <Paper elevation={3} sx={{ padding: 2, mt: 2, mb: 2 }}>
+    <Grid item key={i}>
+      <Paper
+        elevation={3}
+        sx={{ padding: 2, mt: 2, mb: 2, textAlign: 'center' }}
+      >
         <PieChart
           className='pie'
-          key={i}
           title={options.title}
           palette={[['#F5564A'], ['#03A9F4'], ['#99CC66']]}
           theme={'material.blue.light'}
@@ -129,7 +133,22 @@ function DashBoard() {
       <Grid item xs={12} textAlign='center' margin={2}>
         <Typography variant='title'>You got this, {firstName}!</Typography>
       </Grid>
-      {pies}
+      {tasks.length !== 0 ? (
+        pies
+      ) : (
+        <Paper
+          elevation={3}
+          sx={{ padding: 2, mt: 2, mb: 2, textAlign: 'center' }}
+        >
+          <Typography variant='h5'>No tasks are assigned to you</Typography>
+          <img
+            src={nodatamorning}
+            height='auto'
+            width='500px'
+            style={{ borderRadius: '5px', margin: '10px' }}
+          />
+        </Paper>
+      )}
     </Grid>
   );
 }
