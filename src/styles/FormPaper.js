@@ -8,6 +8,8 @@ const FormPaper = styled(Paper)({
   alignItems: 'center',
   margin: '20px',
   padding: '5px',
+  width: 525,
+  height: 600,
 });
 
 export default FormPaper;

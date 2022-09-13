@@ -1,12 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
+import dateTransformer from '../utils/dateTransformer';
 
-function dateTransformer(date) {
-  const month = new Date(date).getMonth();
-  const day = new Date(date).getDate();
-  const year = new Date(date).getFullYear();
-  return `${month}-${day}-${year}`;
-}
+import { DataGrid } from '@mui/x-data-grid';
 
 function TaskTable({ taskData, project }) {
   const nav = useNavigate();
@@ -71,6 +66,7 @@ function TaskTable({ taskData, project }) {
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         autoHeight
+        rowHeight={30}
         localeText={{ noRowsLabel: 'No data to display' }}
         rows={rows}
         columns={columns}

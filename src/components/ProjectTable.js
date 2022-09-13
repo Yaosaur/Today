@@ -27,6 +27,7 @@ function ProjectTable({ projectData }) {
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         autoHeight
+        rowHeight={30}
         localeText={{ noRowsLabel: 'No data to display' }}
         rows={rows}
         columns={columns}

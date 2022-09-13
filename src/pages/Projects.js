@@ -1,35 +1,39 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { fetchProjects } from '../store/projects-slice';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import ProjectTable from '../components/ProjectTable';
-import { Typography, Tooltip, IconButton } from '@mui/material';
+import ModalBox from '../styles/ModalBox';
+import NewProjectForm from '../components/NewProjectForm';
+import { Box, Typography, Tooltip, IconButton, Modal } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 function Projects() {
-  const dispatch = useDispatch();
-  const nav = useNavigate();
   const projectData = useSelector(state => state.projects.projects);
-
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
+  const [open, setOpen] = useState(false);
 
   return (
-    <div>
-      <Typography variant='h4'>Projects</Typography>
-      <Tooltip title='Add Project'>
-        <IconButton
-          onClick={() => {
-            nav('/newproject');
-          }}
-        >
-          <AddIcon />
-        </IconButton>
-      </Tooltip>
+    <>
+      <Box display='flex' alignItems='baseline'>
+        <Typography variant='title'>Projects</Typography>
+        <Tooltip title='Add Project'>
+          <IconButton
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
       <ProjectTable projectData={projectData} />
-    </div>
+      {open && (
+        <Modal open={open} onClick={() => setOpen(false)}>
+          <ModalBox>
+            <NewProjectForm />
+          </ModalBox>
+        </Modal>
+      )}
+    </>
   );
 }
 

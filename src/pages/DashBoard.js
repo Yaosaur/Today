@@ -8,17 +8,18 @@ import PieChart, {
   Label,
   Legend,
 } from 'devextreme-react/pie-chart';
-import { Typography, Grid, Paper } from '@mui/material';
+import { CircularProgress, Typography, Grid, Paper } from '@mui/material';
 import nodatamorning from '../images/nodatamorning.gif';
-import { margin } from '@mui/system';
 
 function DashBoard() {
   const firstName = useSelector(state => state.auth.user.firstName);
+  const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     getTasks().then(data => {
       setTasks(data.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -133,7 +134,9 @@ function DashBoard() {
       <Grid item xs={12} textAlign='center' margin={2}>
         <Typography variant='title'>You got this, {firstName}!</Typography>
       </Grid>
-      {tasks.length !== 0 ? (
+      {isLoading ? (
+        <CircularProgress size='7rem' />
+      ) : tasks.length !== 0 ? (
         pies
       ) : (
         <Paper
@@ -143,6 +146,7 @@ function DashBoard() {
           <Typography variant='h5'>No tasks are assigned to you</Typography>
           <img
             src={nodatamorning}
+            alt='No tasks available'
             height='auto'
             width='500px'
             style={{ borderRadius: '5px', margin: '10px' }}

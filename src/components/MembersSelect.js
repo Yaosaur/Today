@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
-function MembersSelect(props) {
+function MembersSelect({ memberOptions, defaultMembers, onChange, errMsg }) {
   const currentUser = useSelector(state => state.auth.user);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    if (props.memberOptions) {
-      setOptions([currentUser, ...props.memberOptions]);
+    if (memberOptions) {
+      setOptions([currentUser, ...memberOptions]);
     } else {
       findUser().then(data => {
         const filteredEmailList = data.data.filter(
@@ -20,7 +20,7 @@ function MembersSelect(props) {
         setOptions(filteredEmailList);
       });
     }
-  }, [currentUser, props.memberOptions]);
+  }, [currentUser, memberOptions]);
 
   return (
     <>
@@ -29,11 +29,12 @@ function MembersSelect(props) {
         id='tags-standard'
         options={options}
         getOptionLabel={option => option.email}
-        defaultValue={props.defaultMembers}
+        defaultValue={defaultMembers}
         isOptionEqualToValue={(option, value) => option.email === value.email}
-        sx={{ ml: 1.5, mr: 1.5, width: 300 }}
+        fullWidth={true}
+        chip={{ size: 'small' }}
         onChange={(event, value) => {
-          props.onChange(value);
+          onChange(value);
         }}
         renderInput={params => (
           <TextField
@@ -41,8 +42,8 @@ function MembersSelect(props) {
             variant='standard'
             label='Members'
             placeholder='Add Members'
-            error={Boolean(props.errMsg)}
-            helperText={props.errMsg && props.errMsg}
+            error={Boolean(errMsg)}
+            helperText={errMsg && errMsg}
           />
         )}
       />

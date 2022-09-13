@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       store.dispatch(logOut());
     } else {
       store.dispatch(authActions.receiveUser(decodedUser));
+      store.dispatch(fetchProjects());
     }
   }
 });
