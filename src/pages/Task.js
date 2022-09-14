@@ -7,6 +7,7 @@ import dateTransformer from '../utils/dateTransformer';
 
 import TaskForm from '../components/TaskForm';
 import ModalBox from '../styles/ModalBox';
+import Comments from '../components/Comments';
 import {
   CircularProgress,
   Grid,
@@ -30,6 +31,7 @@ function Task() {
   const [open, setOpen] = useState(false);
 
   const {
+    _id,
     project,
     title,
     description,
@@ -40,6 +42,7 @@ function Task() {
     priority,
     type,
     status,
+    comments,
   } = task;
 
   const projectData = useSelector(state => {
@@ -89,7 +92,14 @@ function Task() {
 
   const mainContent = (
     <>
-      <Grid container item xs={6} justifyContent='space-between' rowGap={2}>
+      <Grid
+        container
+        item
+        xs={6}
+        justifyContent='space-between'
+        rowGap={2}
+        sx={{ height: '80%' }}
+      >
         <Grid container item xs={5} flexDirection='column' rowGap={1}>
           <Typography variant='h4'>Title</Typography>
           <Typography variant='body'>{title}</Typography>
@@ -181,7 +191,9 @@ function Task() {
           </Zoom>
         </Grid>
       </Grid>
-      <Grid container item xs={5}></Grid>
+      <Grid container item xs={6} sx={{ height: '100%' }}>
+        <Comments taskId={_id} taskComments={comments} />
+      </Grid>
     </>
   );
 
@@ -198,7 +210,7 @@ function Task() {
           <CircularProgress size='7rem' />
         </Grid>
       ) : (
-        <>{mainContent}</>
+        <Grid container>{mainContent}</Grid>
       )}
 
       {open && (

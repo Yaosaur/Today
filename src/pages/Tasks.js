@@ -16,7 +16,7 @@ function Tasks() {
   return (
     <>
       <Typography variant='title'>Tasks</Typography>
-      <TaskTable taskData={tasks} />
+      <TaskTable taskData={tasks} tableRows={10} />
     </>
   );
 }

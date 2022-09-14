@@ -10,9 +10,6 @@ const projectsSlice = createSlice({
     receiveProjects(state, action) {
       state.projects = [...action.payload];
     },
-    addToProjects(state, action) {
-      state.projects.push(action.payload);
-    },
     editProject(state, action) {
       let foundIndex = state.projects.findIndex(
         project => project._id === action.payload._id
