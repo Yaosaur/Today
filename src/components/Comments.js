@@ -18,19 +18,23 @@ import {
   TextField,
   Button,
   Typography,
+  Link,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function Comments({ taskId, taskComments }) {
   const [comments, setComments] = useState(taskComments);
   const [anchorEl, setAnchorEl] = useState({ anchorEl: null, menus: [] });
+  const [isEditing, setIsEditing] = useState([]);
 
   useEffect(() => {
     const menus = comments.map(comment => false);
     setAnchorEl({ menus });
+    setIsEditing([...menus]);
   }, [comments]);
 
   const commentInput = useRef('');
+  const editCommentInput = useRef('');
 
   const submitCommentHandler = () => {
     if (commentInput.current.value.trim().length === 0) {
@@ -55,6 +59,28 @@ function Comments({ taskId, taskComments }) {
     const { menus } = anchorEl;
     menus[index] = false;
     setAnchorEl({ anchorEl: null, menus });
+  };
+
+  const isEditingHandler = index => {
+    const editAllFalse = comments.map(comment => false);
+    let editArray = editAllFalse;
+    editArray[index] = true;
+    setIsEditing(editArray);
+    handleClose(index);
+  };
+
+  const editSubmitHandler = (commentId, index) => {
+    if (editCommentInput.current.value.trim().length === 0) {
+      editCommentInput.current.value = '';
+      return;
+    }
+    editComment(taskId, commentId, {
+      comment: editCommentInput.current.value,
+    }).then(data => {
+      setComments(data.data.comments);
+      editCommentInput.current.value = '';
+      handleClose(index);
+    });
   };
 
   const deleteCommentHandler = (commentId, index) => {
@@ -106,11 +132,10 @@ function Comments({ taskId, taskComments }) {
                   anchorEl.menus[index] !== undefined && anchorEl.menus[index]
                 }
                 onClose={() => handleClose(index)}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
               >
-                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                <MenuItem onClick={() => isEditingHandler(index)}>
+                  Edit
+                </MenuItem>
                 <MenuItem
                   onClick={() => deleteCommentHandler(comment._id, index)}
                 >
@@ -118,9 +143,46 @@ function Comments({ taskId, taskComments }) {
                 </MenuItem>
               </Menu>
               <CardContent sx={{ pl: 1 }}>
-                <Typography sx={{ wordWrap: 'break-word' }} variant='subtitle2'>
-                  {comment.comment}
-                </Typography>
+                {!isEditing[index] && (
+                  <Typography
+                    sx={{ wordWrap: 'break-word' }}
+                    variant='subtitle2'
+                  >
+                    {comment.comment}
+                  </Typography>
+                )}
+                {isEditing[index] && (
+                  <>
+                    <TextField
+                      inputRef={editCommentInput}
+                      defaultValue={comment.comment}
+                      size='small'
+                      multiline
+                      rows={2}
+                      sx={{ width: '100%' }}
+                    />
+                    <Link
+                      component='button'
+                      variant='body2'
+                      sx={{ mr: 2, mt: 1 }}
+                      onClick={() => editSubmitHandler(comment._id, index)}
+                    >
+                      Edit
+                    </Link>
+                    <Link
+                      component='button'
+                      variant='body2'
+                      sx={{ mt: 1 }}
+                      color='error'
+                      onClick={() => {
+                        const editFalse = comments.map(comment => false);
+                        setIsEditing(editFalse);
+                      }}
+                    >
+                      Cancel
+                    </Link>
+                  </>
+                )}
               </CardContent>
               {index !== comments.length - 1 && <Divider />}
             </Card>
