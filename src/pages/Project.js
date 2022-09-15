@@ -97,7 +97,7 @@ function Project() {
 
   const deleteProjectHandler = () => {
     deleteProject(projectId).then(data => {
-      dispatch(projectsActions.removeFromProjects(data.data));
+      dispatch(projectsActions.removeFromProjects(data.data._id));
       nav('/', { replace: true });
     });
   };

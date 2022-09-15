@@ -1,7 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createComment } from '../services/comments-api';
 import dateTransformer from '../utils/dateTransformer';
 import { timeTransformer } from '../utils/dateTransformer';
+import { editComment, deleteComment } from '../services/comments-api';
 
 import {
   Grid,
@@ -11,26 +12,56 @@ import {
   CardContent,
   Divider,
   Avatar,
+  Menu,
+  MenuItem,
   IconButton,
   TextField,
   Button,
   Typography,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { fontWeight } from '@mui/system';
 
 function Comments({ taskId, taskComments }) {
   const [comments, setComments] = useState(taskComments);
+  const [anchorEl, setAnchorEl] = useState({ anchorEl: null, menus: [] });
+
+  useEffect(() => {
+    const menus = comments.map(comment => false);
+    setAnchorEl({ menus });
+  }, [comments]);
 
   const commentInput = useRef('');
 
   const submitCommentHandler = () => {
+    if (commentInput.current.value.trim().length === 0) {
+      commentInput.current.value = '';
+      return;
+    }
     createComment(taskId, { comment: commentInput.current.value }).then(
       data => {
         commentInput.current.value = '';
         setComments(data.data.comments);
       }
     );
+  };
+
+  const handleClick = (event, index) => {
+    const { menus } = anchorEl;
+    menus[index] = true;
+    setAnchorEl({ anchorEl: event.currentTarget, menus });
+  };
+
+  const handleClose = index => {
+    const { menus } = anchorEl;
+    menus[index] = false;
+    setAnchorEl({ anchorEl: null, menus });
+  };
+
+  const deleteCommentHandler = (commentId, index) => {
+    deleteComment(taskId, commentId).then(data => {
+      setComments(data.data.comments);
+      handleClose(index);
+    });
   };
 
   return (
@@ -58,7 +89,7 @@ function Comments({ taskId, taskComments }) {
                   <Avatar>{`${comment.poster.firstName[0]}${comment.poster.lastName[0]}`}</Avatar>
                 }
                 action={
-                  <IconButton aria-label='settings'>
+                  <IconButton onClick={event => handleClick(event, index)}>
                     <MoreVertIcon />
                   </IconButton>
                 }
@@ -68,6 +99,24 @@ function Comments({ taskId, taskComments }) {
                   comment.published
                 )} ${timeTransformer(new Date(comment.published))}`}
               />
+              <Menu
+                id='basic-menu'
+                anchorEl={anchorEl.anchorEl}
+                open={
+                  anchorEl.menus[index] !== undefined && anchorEl.menus[index]
+                }
+                onClose={() => handleClose(index)}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                <MenuItem
+                  onClick={() => deleteCommentHandler(comment._id, index)}
+                >
+                  Delete
+                </MenuItem>
+              </Menu>
               <CardContent sx={{ pl: 1 }}>
                 <Typography sx={{ wordWrap: 'break-word' }} variant='subtitle2'>
                   {comment.comment}

@@ -18,7 +18,7 @@ const projectsSlice = createSlice({
     },
     removeFromProjects(state, action) {
       state.projects = state.projects.filter(
-        project => project._id !== action.payload._id
+        project => project._id !== action.payload
       );
     },
     removeAllProjects(state) {
