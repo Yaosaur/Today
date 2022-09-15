@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { projectsActions } from '../store/projects-slice';
 import { getProject } from '../services/projects-api';
 import { useFormik } from 'formik';
@@ -30,6 +30,7 @@ import TaskTable from '../components/TaskTable';
 
 function Project() {
   const { projectId } = useParams();
+  const currentUserEmail = useSelector(state => state.auth.user.email);
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -121,7 +122,23 @@ function Project() {
               sx={{ height: '30%' }}
             >
               <Typography variant='h4'>Project Title</Typography>
-              {isEditing.title ? (
+              {project.creator &&
+                project.creator.email === currentUserEmail &&
+                !isEditing.title && (
+                  <>
+                    <Tooltip title='Edit Title'>
+                      <IconButton onClick={() => editingHandler('title', true)}>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title='Delete Project'>
+                      <IconButton onClick={deleteProjectHandler}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </>
+                )}
+              {isEditing.title && (
                 <Tooltip title='Cancel Editing'>
                   <IconButton
                     onClick={() => {
@@ -132,18 +149,7 @@ function Project() {
                     <ClearIcon />
                   </IconButton>
                 </Tooltip>
-              ) : (
-                <Tooltip title='Edit Title'>
-                  <IconButton onClick={() => editingHandler('title', true)}>
-                    <EditIcon />
-                  </IconButton>
-                </Tooltip>
               )}
-              <Tooltip title='Delete Project'>
-                <IconButton onClick={deleteProjectHandler}>
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
             </Grid>
             <Grid item lg={6} sx={{ height: '30%' }}>
               {isEditing.title ? (
@@ -179,7 +185,18 @@ function Project() {
               sx={{ maxWidth: '100%', height: '30%' }}
             >
               <Typography variant='h4'>Project Description</Typography>
-              {isEditing.description ? (
+              {project.creator &&
+                project.creator.email === currentUserEmail &&
+                !isEditing.description && (
+                  <Tooltip title='Edit Description'>
+                    <IconButton
+                      onClick={() => editingHandler('description', true)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              {isEditing.description && (
                 <Tooltip title='Cancel Editing'>
                   <IconButton
                     onClick={() => {
@@ -188,14 +205,6 @@ function Project() {
                     }}
                   >
                     <ClearIcon />
-                  </IconButton>
-                </Tooltip>
-              ) : (
-                <Tooltip title='Edit Description'>
-                  <IconButton
-                    onClick={() => editingHandler('description', true)}
-                  >
-                    <EditIcon />
                   </IconButton>
                 </Tooltip>
               )}
@@ -231,13 +240,15 @@ function Project() {
         <Grid container item xs={5} md={6} rowSpacing={0}>
           <Grid container item xs={12} sx={{ height: '10%' }}>
             <Typography variant='h4'>Members</Typography>
-            {!isEditing.members && (
-              <Tooltip title='Edit Members'>
-                <IconButton onClick={() => editingHandler('members', true)}>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
-            )}
+            {project.creator &&
+              project.creator.email === currentUserEmail &&
+              !isEditing.members && (
+                <Tooltip title='Edit Members'>
+                  <IconButton onClick={() => editingHandler('members', true)}>
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
+              )}
             {isEditing.members && (
               <Tooltip title='Cancel Editing'>
                 <IconButton onClick={cancelEditingMembersHandler}>
@@ -261,7 +272,7 @@ function Project() {
             </Grid>
           ) : (
             <>
-              <MemberTable members={members} />
+              <MemberTable creator={project.creator} members={members} />
             </>
           )}
         </Grid>

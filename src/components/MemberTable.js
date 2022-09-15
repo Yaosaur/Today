@@ -1,6 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
 
-function MemberTable({ members }) {
+function MemberTable({ creator, members }) {
   const columns = [
     {
       field: 'firstName',
@@ -12,7 +12,15 @@ function MemberTable({ members }) {
     { field: 'email', headerName: 'Email', minWidth: 130, flex: 1 },
   ];
 
-  let transformedData = members.map((member, index) => {
+  let allMembers = [creator, ...members];
+  let transformedData = allMembers.map((member, index) => {
+    if (index === 0) {
+      return {
+        ...member,
+        firstName: `${member.firstName} (Creator)`,
+        id: index,
+      };
+    }
     return { ...member, id: index };
   });
 
