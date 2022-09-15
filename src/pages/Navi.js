@@ -1,11 +1,12 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { projectsActions } from '../store/projects-slice';
 import { logOut } from '../store/auth-slice';
 
 import NaviItem from '../components/NaviItem';
-import { Avatar, Button } from '@mui/material';
+import UserDisplay from '../components/UserDisplay';
+import { Button } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FolderIcon from '@mui/icons-material/Folder';
 import TaskIcon from '@mui/icons-material/Task';
@@ -73,8 +74,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 function Navi() {
   const dispatch = useDispatch();
   const nav = useNavigate();
-  const firstName = useSelector(state => state.auth.user.firstName);
-  const lastName = useSelector(state => state.auth.user.lastName);
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
@@ -146,17 +145,7 @@ function Navi() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Box
-          display='flex'
-          flexDirection='column'
-          alignItems='center'
-          margin={2}
-        >
-          <Avatar sx={{ width: 70, height: 70, mt: 1, mb: 1 }}>
-            {firstName[0]} {lastName[0]}
-          </Avatar>
-          <Typography variant='h5'>{`${firstName} ${lastName}`}</Typography>
-        </Box>
+        <UserDisplay />
         <Divider />
         <List>
           <NaviItem text={'Dashboard'} onClick={homePageHandler}>
