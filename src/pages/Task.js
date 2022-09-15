@@ -191,7 +191,7 @@ function Task() {
           </Zoom>
         </Grid>
       </Grid>
-      <Grid container item xs={6} sx={{ height: '100%' }}>
+      <Grid container item xs={6} sx={{ height: '80%' }}>
         <Comments taskId={_id} taskComments={comments} />
       </Grid>
     </>
@@ -202,7 +202,7 @@ function Task() {
       {isLoading ? (
         <Grid
           container
-          height='100%'
+          height='80%'
           width='100%'
           justifyContent='center'
           alignItems='center'
@@ -210,7 +210,9 @@ function Task() {
           <CircularProgress size='7rem' />
         </Grid>
       ) : (
-        <Grid container>{mainContent}</Grid>
+        <Grid container height='80%'>
+          {mainContent}
+        </Grid>
       )}
 
       {open && (

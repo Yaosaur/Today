@@ -33,10 +33,15 @@ function Comments({ taskId, taskComments }) {
     const menus = comments.map(comment => false);
     setAnchorEl({ menus });
     setIsEditing([...menus]);
+    bottomRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
   }, [comments]);
 
   const commentInput = useRef('');
   const editCommentInput = useRef('');
+  const bottomRef = useRef('');
 
   const submitCommentHandler = () => {
     if (commentInput.current.value.trim().length === 0) {
@@ -93,16 +98,16 @@ function Comments({ taskId, taskComments }) {
   };
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
+    <Grid container alignContent='flex-start'>
+      <Grid container item xs={12} sx={{ height: '80%' }}>
         <Typography variant='h4'>Comments</Typography>
         <List
           sx={{
             width: '100%',
             position: 'relative',
             overflow: 'auto',
-            height: '100%',
-            maxHeight: 580,
+            height: { xl: '90%', lg: '80%' },
+            maxHeight: { xl: 700, lg: 600 },
             mt: 1,
             mb: 1,
             pb: 0,
@@ -191,28 +196,31 @@ function Comments({ taskId, taskComments }) {
               {index !== comments.length - 1 && <Divider />}
             </Card>
           ))}
+          <div ref={bottomRef} />
         </List>
       </Grid>
-      <TextField
-        inputRef={commentInput}
-        size='small'
-        multiline
-        rows={2}
-        sx={{ width: '100%', height: 100 }}
-        InputProps={{
-          endAdornment: (
-            <Button
-              size='small'
-              variant='contained'
-              onClick={submitCommentHandler}
-              sx={{ height: '100%' }}
-            >
-              Comment
-            </Button>
-          ),
-          sx: { pr: 0, pt: 0, pb: 0 },
-        }}
-      />
+      <Grid item xs={12}>
+        <TextField
+          inputRef={commentInput}
+          size='small'
+          multiline
+          rows={2}
+          sx={{ width: '100%', height: '20%', backgroundColor: 'white' }}
+          InputProps={{
+            endAdornment: (
+              <Button
+                size='small'
+                variant='contained'
+                onClick={submitCommentHandler}
+                sx={{ height: '100%' }}
+              >
+                Comment
+              </Button>
+            ),
+            sx: { pr: 0, pt: 0, pb: 0, backgroundColor: 'white' },
+          }}
+        />
+      </Grid>
     </Grid>
   );
 }
