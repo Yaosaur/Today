@@ -23,6 +23,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function Task() {
+  const currentUserEmail = useSelector(state => state.auth.user.email);
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { taskId } = useParams();
@@ -56,11 +57,15 @@ function Task() {
     });
   }, [taskId]);
 
-  const deleteTaskHandler = () => {
-    deleteTask(project, taskId).then(data => {
-      dispatch(projectsActions.editProject(data.data));
-      nav(`/projects/${project}`, { replace: true });
-    });
+  const userInvolvedInTask = () => {
+    const involvedUsers = [issuer, ...assignedTo];
+    if (
+      involvedUsers.find(user => user.email === currentUserEmail) !== undefined
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   let colors = {
@@ -88,6 +93,13 @@ function Task() {
     } else if (label === 'type') {
       return colors[label][type];
     }
+  };
+
+  const deleteTaskHandler = () => {
+    deleteTask(project, taskId).then(data => {
+      dispatch(projectsActions.editProject(data.data));
+      nav(`/projects/${project}`, { replace: true });
+    });
   };
 
   const mainContent = (
@@ -175,20 +187,24 @@ function Task() {
               </Fab>
             </Tooltip>
           </Zoom>
-          <Zoom in={true} style={{ transitionDelay: '400ms' }}>
-            <Tooltip title='Edit Task'>
-              <Fab color='secondary' onClick={() => setOpen(true)}>
-                <EditIcon />
-              </Fab>
-            </Tooltip>
-          </Zoom>
-          <Zoom in={true} style={{ transitionDelay: '500ms' }}>
-            <Tooltip title='Delete Task'>
-              <Fab color='error' onClick={deleteTaskHandler}>
-                <DeleteIcon />
-              </Fab>
-            </Tooltip>
-          </Zoom>
+          {assignedTo && userInvolvedInTask() && (
+            <Zoom in={true} style={{ transitionDelay: '400ms' }}>
+              <Tooltip title='Edit Task'>
+                <Fab color='secondary' onClick={() => setOpen(true)}>
+                  <EditIcon />
+                </Fab>
+              </Tooltip>
+            </Zoom>
+          )}
+          {issuer && currentUserEmail === issuer.email && (
+            <Zoom in={true} style={{ transitionDelay: '500ms' }}>
+              <Tooltip title='Delete Task'>
+                <Fab color='error' onClick={deleteTaskHandler}>
+                  <DeleteIcon />
+                </Fab>
+              </Tooltip>
+            </Zoom>
+          )}
         </Grid>
       </Grid>
       <Grid container item xs={6} sx={{ height: '80%' }}>
