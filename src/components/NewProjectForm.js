@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import newProjectSchema from '../schemas/newProject';
 import { createProject } from '../services/projects-api';
-import { projectsActions } from '../store/projects-slice';
+import { fetchProjects } from '../store/projects-slice';
 import { useState } from 'react';
 import { Stack, Typography, TextField, Button } from '@mui/material';
 import MembersSelect from './MembersSelect';
@@ -17,7 +17,7 @@ function NewProjectForm() {
 
   const onSubmit = values => {
     createProject({ ...values, members }).then(result => {
-      dispatch(projectsActions.addToProjects(result.data));
+      dispatch(fetchProjects());
       nav(`/projects/${result.data._id}`);
     });
   };

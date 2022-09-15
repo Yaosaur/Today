@@ -31,8 +31,8 @@ function ProjectTable({ projectData }) {
         localeText={{ noRowsLabel: 'No data to display' }}
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         onRowClick={params => {
           nav(`/projects/${params.id}`);
         }}

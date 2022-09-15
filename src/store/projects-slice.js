@@ -10,9 +10,6 @@ const projectsSlice = createSlice({
     receiveProjects(state, action) {
       state.projects = [...action.payload];
     },
-    addToProjects(state, action) {
-      state.projects.push(action.payload);
-    },
     editProject(state, action) {
       let foundIndex = state.projects.findIndex(
         project => project._id === action.payload._id
@@ -21,7 +18,7 @@ const projectsSlice = createSlice({
     },
     removeFromProjects(state, action) {
       state.projects = state.projects.filter(
-        project => project._id !== action.payload._id
+        project => project._id !== action.payload
       );
     },
     removeAllProjects(state) {

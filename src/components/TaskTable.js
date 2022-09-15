@@ -3,7 +3,7 @@ import dateTransformer from '../utils/dateTransformer';
 
 import { DataGrid } from '@mui/x-data-grid';
 
-function TaskTable({ taskData, project }) {
+function TaskTable({ taskData, project, tableRows }) {
   const nav = useNavigate();
 
   const projectPage = [
@@ -70,8 +70,8 @@ function TaskTable({ taskData, project }) {
         localeText={{ noRowsLabel: 'No data to display' }}
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={tableRows}
+        rowsPerPageOptions={[tableRows]}
         onRowClick={params => {
           nav(`/tasks/${params.id}`);
         }}

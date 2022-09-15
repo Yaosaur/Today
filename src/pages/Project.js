@@ -97,7 +97,7 @@ function Project() {
 
   const deleteProjectHandler = () => {
     deleteProject(projectId).then(data => {
-      dispatch(projectsActions.removeFromProjects(data.data));
+      dispatch(projectsActions.removeFromProjects(data.data._id));
       nav('/', { replace: true });
     });
   };
@@ -116,14 +116,19 @@ function Project() {
             <Grid
               container
               item
-              xs={6}
+              lg={6}
               alignContent='flex-start'
               sx={{ height: '30%' }}
             >
               <Typography variant='h4'>Project Title</Typography>
               {isEditing.title ? (
                 <Tooltip title='Cancel Editing'>
-                  <IconButton onClick={() => editingHandler('title', false)}>
+                  <IconButton
+                    onClick={() => {
+                      editingHandler('title', false);
+                      values.title = project.title;
+                    }}
+                  >
                     <ClearIcon />
                   </IconButton>
                 </Tooltip>
@@ -140,7 +145,7 @@ function Project() {
                 </IconButton>
               </Tooltip>
             </Grid>
-            <Grid item xs={6} sx={{ height: '30%' }}>
+            <Grid item lg={6} sx={{ height: '30%' }}>
               {isEditing.title ? (
                 <>
                   <TextField
@@ -152,6 +157,7 @@ function Project() {
                     onBlur={handleBlur}
                     error={touched.title && Boolean(errors.title)}
                     helperText={touched.title && errors.title}
+                    sx={{ width: 250 }}
                   />
                   <Tooltip title='Save Changes'>
                     <IconButton onClick={editProjectHandler}>
@@ -176,7 +182,10 @@ function Project() {
               {isEditing.description ? (
                 <Tooltip title='Cancel Editing'>
                   <IconButton
-                    onClick={() => editingHandler('description', false)}
+                    onClick={() => {
+                      editingHandler('description', false);
+                      values.description = project.description;
+                    }}
                   >
                     <ClearIcon />
                   </IconButton>
@@ -196,6 +205,8 @@ function Project() {
                 <>
                   <TextField
                     size='small'
+                    multiline
+                    maxRows={3}
                     label='Description'
                     name='description'
                     value={values.description}
@@ -203,6 +214,7 @@ function Project() {
                     onBlur={handleBlur}
                     error={touched.description && Boolean(errors.description)}
                     helperText={touched.description && errors.description}
+                    sx={{ width: 250 }}
                   />
                   <Tooltip title='Save Changes'>
                     <IconButton onClick={editProjectHandler}>
@@ -265,11 +277,7 @@ function Project() {
         </Grid>
       </Grid>
       {project.tasks && (
-        <TaskTable
-          taskData={project.tasks}
-          memberOptions={project.members}
-          project={true}
-        />
+        <TaskTable taskData={project.tasks} project={true} tableRows={5} />
       )}
     </>
   );
