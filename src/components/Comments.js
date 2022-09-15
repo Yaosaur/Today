@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { createComment } from '../services/comments-api';
 import dateTransformer from '../utils/dateTransformer';
 import { timeTransformer } from '../utils/dateTransformer';
@@ -23,6 +24,7 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function Comments({ taskId, taskComments }) {
+  const currentUserEmail = useSelector(state => state.auth.user.email);
   const [comments, setComments] = useState(taskComments);
   const [anchorEl, setAnchorEl] = useState({ anchorEl: null, menus: [] });
   const [isEditing, setIsEditing] = useState([]);
@@ -115,9 +117,11 @@ function Comments({ taskId, taskComments }) {
                   <Avatar>{`${comment.poster.firstName[0]}${comment.poster.lastName[0]}`}</Avatar>
                 }
                 action={
-                  <IconButton onClick={event => handleClick(event, index)}>
-                    <MoreVertIcon />
-                  </IconButton>
+                  currentUserEmail === comment.poster.email && (
+                    <IconButton onClick={event => handleClick(event, index)}>
+                      <MoreVertIcon />
+                    </IconButton>
+                  )
                 }
                 titleTypographyProps={{ variant: 'subtitle1' }}
                 title={`${comment.poster.firstName} ${comment.poster.lastName}`}
