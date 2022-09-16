@@ -27,27 +27,27 @@ function App() {
   return (
     <ThemeProvider theme={customTheme}>
       <Router>
-        <Routes>
-          <Route path='/' element={<ProtectedRoute />}>
-            <Suspense
-              fallback={
-                <Grid container justifyContent='center' alignItems='center'>
-                  <CircularProgress />
-                </Grid>
-              }
-            >
+        <Suspense
+          fallback={
+            <Grid container justifyContent='center' alignItems='center'>
+              <CircularProgress />
+            </Grid>
+          }
+        >
+          <Routes>
+            <Route path='/' element={<ProtectedRoute />}>
               <Route path='/' element={<DashBoard />} />
               <Route path='/projects' element={<Projects />} />
               <Route path='projects/:projectId' element={<Project />} />
               <Route path='tasks/:taskId' element={<Task />} />
               <Route path='/tasks' element={<Tasks />} />
-            </Suspense>
-          </Route>
-          <Route path='/' element={<AuthRoute />}>
-            <Route path='/login' element={<LogIn />} />
-            <Route path='/register' element={<Register />} />
-          </Route>
-        </Routes>
+            </Route>
+            <Route path='/' element={<AuthRoute />}>
+              <Route path='/login' element={<LogIn />} />
+              <Route path='/register' element={<Register />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </Router>
     </ThemeProvider>
   );
