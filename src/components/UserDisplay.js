@@ -34,6 +34,7 @@ function UserDisplay() {
 
   const submitPhotoHandler = () => {
     const formData = new FormData();
+    formData.append('location', image);
     formData.append('image', photo.file);
     changeUserPhoto(formData).then(data => {
       dispatch(authActions.editUserImage(data.data));

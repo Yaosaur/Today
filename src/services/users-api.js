@@ -2,8 +2,12 @@ import axios from 'axios';
 
 let baseURL = 'http://localhost:5000';
 
-export const findUser = () => {
+export const findUsers = () => {
   return axios.get(`${baseURL}/users`);
+};
+
+export const findUser = () => {
+  return axios.get(`${baseURL}/users/user`);
 };
 
 export const changeUserPhoto = data => {
