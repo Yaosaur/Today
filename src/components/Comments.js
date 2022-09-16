@@ -119,7 +119,9 @@ function Comments({ taskId, taskComments }) {
               <CardHeader
                 sx={{ pl: 0.5, pb: 0 }}
                 avatar={
-                  <Avatar>{`${comment.poster.firstName[0]}${comment.poster.lastName[0]}`}</Avatar>
+                  <Avatar
+                    src={comment.poster.image}
+                  >{`${comment.poster.firstName[0]}${comment.poster.lastName[0]}`}</Avatar>
                 }
                 action={
                   currentUserEmail === comment.poster.email && (

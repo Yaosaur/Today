@@ -14,6 +14,9 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.user = { id, firstName, lastName, email, image };
     },
+    editUserImage(state, action) {
+      state.user.image = action.payload;
+    },
     removeUser(state) {
       state.isLoggedIn = false;
       state.user = {};

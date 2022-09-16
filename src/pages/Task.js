@@ -14,6 +14,7 @@ import {
   Typography,
   Tooltip,
   Chip,
+  Avatar,
   Fab,
   Zoom,
   Modal,
@@ -157,19 +158,37 @@ function Task() {
         </Grid>
         <Grid container item xs={10} flexDirection='column' rowGap={1}>
           <Typography variant='h4'>Issuer</Typography>
-          <Typography variant='body'>
-            {issuer && issuer.firstName} {issuer && issuer.lastName}
-          </Typography>
+          {issuer && (
+            <Chip
+              avatar={
+                <Avatar src={issuer.image}>
+                  {issuer.firstName[0]} {issuer.lastName[0]}
+                </Avatar>
+              }
+              label={`${issuer.firstName} ${issuer.lastName}`}
+              variant='outlined'
+              color='primary'
+              sx={{ width: 'fit-content' }}
+            />
+          )}
         </Grid>
         <Grid container item xs={10} flexDirection='column' rowGap={1}>
           <Typography variant='h4'>Assigned to</Typography>
           <Grid item>
             {assignedTo &&
               assignedTo.map((member, index) => (
-                <Typography variant='body' key={index} sx={{ paddingRight: 1 }}>
-                  {member.firstName} {member.lastName}
-                  {index !== assignedTo.length - 1 && ','}
-                </Typography>
+                <Chip
+                  key={index}
+                  avatar={
+                    <Avatar src={member.image}>
+                      {member.firstName[0]} {member.lastName[0]}
+                    </Avatar>
+                  }
+                  label={`${member.firstName} ${member.lastName}`}
+                  variant='outlined'
+                  color='primary'
+                  sx={{ mr: 2 }}
+                />
               ))}
           </Grid>
         </Grid>

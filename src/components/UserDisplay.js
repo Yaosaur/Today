@@ -1,6 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRef, useState } from 'react';
 import { changeUserPhoto } from '../services/users-api';
+import { authActions } from '../store/auth-slice';
 
 import { Box, Avatar, Tooltip, IconButton, Typography } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
@@ -8,6 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 
 function UserDisplay() {
+  const dispatch = useDispatch();
   const { firstName, lastName, image } = useSelector(state => state.auth.user);
   const [photo, setPhoto] = useState({ file: null, url: null });
   const filePickerRef = useRef();
@@ -33,13 +35,16 @@ function UserDisplay() {
   const submitPhotoHandler = () => {
     const formData = new FormData();
     formData.append('image', photo.file);
-    changeUserPhoto(formData).then();
+    changeUserPhoto(formData).then(data => {
+      dispatch(authActions.editUserImage(data.data));
+      setPhoto({ file: null, url: null });
+    });
   };
 
   return (
     <Box display='flex' flexDirection='column' alignItems='center' margin={2}>
       <Avatar
-        src={image}
+        src={photo.url ? photo.url : image}
         sx={{
           width: '7rem',
           height: '7rem',
