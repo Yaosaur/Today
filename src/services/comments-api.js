@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let baseURL = 'https://today-project-backend.herokuapp.com';
+let baseURL = process.env.REACT_APP_BACKEND_URL;
 
 export const createComment = (taskId, data) => {
   return axios.post(`${baseURL}/comments/${taskId}`, data);

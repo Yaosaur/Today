@@ -14,7 +14,7 @@ import DashBoard from './pages/DashBoard';
 // import Tasks from './pages/Tasks';
 // import Task from './pages/Task';
 import theme from './styles/theme';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Grid, CircularProgress } from '@mui/material/';
 
 const Projects = React.lazy(() => import('./pages/Projects'));
 const Project = React.lazy(() => import('./pages/Project'));
@@ -27,21 +27,27 @@ function App() {
   return (
     <ThemeProvider theme={customTheme}>
       <Router>
-        <Suspense fallback={<CircularProgress />}>
-          <Routes>
-            <Route path='/' element={<ProtectedRoute />}>
+        <Routes>
+          <Route path='/' element={<ProtectedRoute />}>
+            <Suspense
+              fallback={
+                <Grid container justifyContent='center' alignItems='center'>
+                  <CircularProgress />
+                </Grid>
+              }
+            >
               <Route path='/' element={<DashBoard />} />
               <Route path='/projects' element={<Projects />} />
               <Route path='projects/:projectId' element={<Project />} />
               <Route path='tasks/:taskId' element={<Task />} />
               <Route path='/tasks' element={<Tasks />} />
-            </Route>
-            <Route path='/' element={<AuthRoute />}>
-              <Route path='/login' element={<LogIn />} />
-              <Route path='/register' element={<Register />} />
-            </Route>
-          </Routes>
-        </Suspense>
+            </Suspense>
+          </Route>
+          <Route path='/' element={<AuthRoute />}>
+            <Route path='/login' element={<LogIn />} />
+            <Route path='/register' element={<Register />} />
+          </Route>
+        </Routes>
       </Router>
     </ThemeProvider>
   );

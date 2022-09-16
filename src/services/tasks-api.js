@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let baseURL = 'https://today-project-backend.herokuapp.com';
+let baseURL = process.env.REACT_APP_BACKEND_URL;
 
 export const getTasks = () => {
   return axios.get(`${baseURL}/tasks/`);
