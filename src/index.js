@@ -7,6 +7,7 @@ import { logOut } from './store/auth-slice';
 
 import { authActions } from './store/auth-slice';
 import { fetchProjects } from './store/projects-slice';
+import { findUser } from './services/users-api';
 import axios from 'axios';
 import decode from 'jwt-decode';
 
@@ -19,6 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       store.dispatch(logOut());
     } else {
       store.dispatch(authActions.receiveUser(decodedUser));
+      const userData = await findUser();
+      store.dispatch(authActions.editUserImage(userData.data.image));
       store.dispatch(fetchProjects());
     }
   }

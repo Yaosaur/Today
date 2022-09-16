@@ -143,7 +143,9 @@ function DashBoard() {
           elevation={3}
           sx={{ padding: 2, mt: 2, mb: 2, textAlign: 'center' }}
         >
-          <Typography variant='h5'>No tasks are assigned to you</Typography>
+          <Typography variant='h5'>
+            You are not involved in any tasks
+          </Typography>
           <img
             src={nodatamorning}
             alt='No tasks available'
