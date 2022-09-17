@@ -14,7 +14,7 @@ import DashBoard from './pages/DashBoard';
 // import Tasks from './pages/Tasks';
 // import Task from './pages/Task';
 import theme from './styles/theme';
-import { Grid, CircularProgress } from '@mui/material/';
+import { Box, CircularProgress } from '@mui/material/';
 
 const Projects = React.lazy(() => import('./pages/Projects'));
 const Project = React.lazy(() => import('./pages/Project'));
@@ -29,9 +29,15 @@ function App() {
       <Router>
         <Suspense
           fallback={
-            <Grid container justifyContent='center' alignItems='center'>
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              width='100vw'
+              height='100vh'
+            >
               <CircularProgress />
-            </Grid>
+            </Box>
           }
         >
           <Routes>
