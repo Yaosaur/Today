@@ -8,8 +8,8 @@ function MemberTable({ creator, members }) {
   const currentUserEmail = useSelector(state => state.auth.user.email);
   const nav = useNavigate();
 
-  const messageButtonHandler = email => {
-    nav('/messages');
+  const messageButtonHandler = (email, firstName, lastName) => {
+    nav(`/messages/${email}`, { state: { firstName, lastName } });
   };
 
   const columns = [
@@ -34,7 +34,13 @@ function MemberTable({ creator, members }) {
             <IconButton
               color='primary'
               size='small'
-              onClick={() => messageButtonHandler(params.row.email)}
+              onClick={() =>
+                messageButtonHandler(
+                  params.row.email,
+                  params.row.firstName,
+                  params.row.lastName
+                )
+              }
             >
               <MessageIcon fontSize='small' />
             </IconButton>
