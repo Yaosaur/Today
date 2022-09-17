@@ -97,6 +97,7 @@ function Register() {
               <TextField
                 size='small'
                 id='outlined-required'
+                type='password'
                 label='Password'
                 placeholder='Password'
                 name='password'
