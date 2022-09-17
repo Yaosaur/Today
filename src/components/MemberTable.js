@@ -1,15 +1,47 @@
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
+import IconButton from '@mui/material/IconButton';
+import MessageIcon from '@mui/icons-material/Message';
 
 function MemberTable({ creator, members }) {
+  const currentUserEmail = useSelector(state => state.auth.user.email);
+  const nav = useNavigate();
+
+  const messageButtonHandler = email => {
+    nav('/messages');
+  };
+
   const columns = [
     {
       field: 'firstName',
       headerName: 'First Name',
-      minWidth: 130,
+      minWidth: 100,
       flex: 1,
     },
-    { field: 'lastName', headerName: 'Last Name', minWidth: 130, flex: 1 },
-    { field: 'email', headerName: 'Email', minWidth: 130, flex: 1 },
+    { field: 'lastName', headerName: 'Last Name', minWidth: 100, flex: 1 },
+    { field: 'email', headerName: 'Email', minWidth: 150, flex: 1.5 },
+    {
+      field: 'message',
+      headerName: 'Message',
+      sortable: false,
+      disableColumnMenu: true,
+      width: 90,
+      align: 'center',
+      renderCell: params => {
+        if (params.row.email !== currentUserEmail) {
+          return (
+            <IconButton
+              color='primary'
+              size='small'
+              onClick={() => messageButtonHandler(params.row.email)}
+            >
+              <MessageIcon fontSize='small' />
+            </IconButton>
+          );
+        }
+      },
+    },
   ];
 
   let allMembers = [creator, ...members];
