@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { findUser } from '../services/users-api';
+import { findUsers } from '../services/users-api';
 import { useSelector } from 'react-redux';
 
 import Autocomplete from '@mui/material/Autocomplete';
@@ -13,7 +13,8 @@ function MembersSelect({ memberOptions, defaultMembers, onChange, errMsg }) {
     if (memberOptions) {
       setOptions([currentUser, ...memberOptions]);
     } else {
-      findUser().then(data => {
+      findUsers().then(data => {
+        console.log(data);
         const filteredEmailList = data.data.filter(
           user => user.email !== currentUser.email
         );

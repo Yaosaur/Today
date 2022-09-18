@@ -1,6 +1,10 @@
 # Today
 
-Today is a project management app meant to be used with the [Today API](https://github.com/Yaosaur/Today-API) to help users collaborate and keep track of tasks that need to be completed for their projects.
+Today is a project management app meant to be used with the [Today API](https://github.com/Yaosaur/Today-API) to help users collaborate on projects. These projects can be broken into smaller tasks which can later be updated and commented on as the project grows.
+
+## Demo
+
+The live site is currently hosted [here](https://today-pm.herokuapp.com/).
 
 ## Features
 
@@ -9,32 +13,41 @@ Users will be able to:
 - Register
 - Login and stayed logged in upon page closure (for up to 8 hours)
 - Logout
-- View all projects they either created or participating in
+- Update or add a profile image
+- View all projects they either created or are participating in (with the option of filter and sorting them)
 - Create new projects and add members to the project
-- Edit and update existing projects
-- Delete projects
+- Edit, delete, and update existing projects (This feature is only available to the creator of the project)
 - Add new tasks for a project
-- View, sort, and filter tasks on a project
+- View all tasks they either issued or are assigned to (with the option of filter and sorting them)
+- View a dashboard with pie chart summaries of their task by priority, status, and type
+- Edit, delete, and update existing tasks (Edit and update are features only available to members involved with the task and not every project member while delete is only available to the task issuer)
+- Comment on a task
+- Edit and delete comments
 
 Additional features for the future:
 
-- A task page to edit and add comments
-- Deleting a task on the project page
-- The abilities to add, edit, and delete a comment
-- Ability for users to add images for their avatars and comments
 - Incorporating chat/messaging for user collaboration
+- Allow images to be attached to comments and a section for all images associated with a task
+- Adding dark mode
+- Touch up on styling
 
 ## Technologies Used
 
 - React/Redux(Toolkit)
-- Formik and Yup
 - Material UI/(Day/Date-Io for date picker)
 
-## Interacting with the App
+The following NPM packages:
 
-The project is currently hosted [here](https://today-pm.herokuapp.com/).
+- Formik and Yup
+- Devextreme(react)
 
-For you to interact with the program on your local computer, please clone to your IDE using
+## Interacting with the App Locally
+
+For you to interact with the program on your local computer,
+
+Please first follow the instructions from [Today API](https://github.com/Yaosaur/Today-API) on local installation before continuing.
+
+Then clone this repository to your IDE using
 
 ```
 git clone https://github.com/Yaosaur/Today.git
@@ -46,9 +59,11 @@ After cloning, install the required NPM packages using
 npm install
 ```
 
+Finally, create a .env file with the following environmental variables: `REACT_APP_BACKEND_URL`
+
 ## Contributing
 
-Currently not accepting any contributions as the backend is not complete and the front end will need to be updated because of it
+Currently not accepting any contributors for this project as the it is still a work in progress, but if you find any bugs you can report it [here](https://github.com/Yaosaur/Today/issues)
 
 ## Credits
 

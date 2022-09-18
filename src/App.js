@@ -44,7 +44,8 @@ function App() {
               <Route path='projects/:projectId' element={<Project />} />
               <Route path='tasks/:taskId' element={<Task />} />
               <Route path='/tasks' element={<Tasks />} />
-              <Route path='/messages/:email' element={<Messages />} />
+              {/* Working on sockets */}
+              {/* <Route path='/messages/:email' element={<Messages />} /> */}
             </Route>
             <Route path='/' element={<AuthRoute />}>
               <Route path='/login' element={<LogIn />} />
