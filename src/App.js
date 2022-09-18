@@ -9,10 +9,6 @@ import Register from './pages/Register';
 import LogIn from './pages/LogIn';
 import ProtectedRoute from './utils/ProtectedRoute';
 import DashBoard from './pages/DashBoard';
-// import Projects from './pages/Projects';
-// import Project from './pages/Project';
-// import Tasks from './pages/Tasks';
-// import Task from './pages/Task';
 import theme from './styles/theme';
 import { Box, CircularProgress } from '@mui/material/';
 
@@ -20,6 +16,7 @@ const Projects = React.lazy(() => import('./pages/Projects'));
 const Project = React.lazy(() => import('./pages/Project'));
 const Tasks = React.lazy(() => import('./pages/Tasks'));
 const Task = React.lazy(() => import('./pages/Task'));
+const Messages = React.lazy(() => import('./pages/Messages'));
 
 const customTheme = createTheme(theme);
 
@@ -47,6 +44,7 @@ function App() {
               <Route path='projects/:projectId' element={<Project />} />
               <Route path='tasks/:taskId' element={<Task />} />
               <Route path='/tasks' element={<Tasks />} />
+              <Route path='/messages/:email' element={<Messages />} />
             </Route>
             <Route path='/' element={<AuthRoute />}>
               <Route path='/login' element={<LogIn />} />
