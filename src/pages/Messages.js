@@ -30,7 +30,7 @@ function Messages() {
     sendMessage({
       receiverEmail: email,
       content: messageInput.current.value,
-    }).then(data => console.log(data.data));
+    });
     messageInput.current.value = '';
   };
 
@@ -40,12 +40,11 @@ function Messages() {
       <Grid container item xs={12}>
         <List>
           {messages.map(message => {
-            console.log(message.sender);
             return (
               <ListItem key={message._id}>
                 <ListItemAvatar>
-                  <Avatar src={currentUser.image}>
-                    {currentUser.firstName[0]} {currentUser.lastName[0]}
+                  <Avatar src={message.sender.image}>
+                    {message.sender.firstName[0]} {message.sender.lastName[0]}
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
