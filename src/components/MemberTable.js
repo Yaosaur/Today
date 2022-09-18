@@ -45,8 +45,8 @@ function MemberTable({ creator, members }) {
       //         <MessageIcon fontSize='small' />
       //       </IconButton>
       //     );
-        }
-      },
+      //   }
+      // },
     },
   ];
 
