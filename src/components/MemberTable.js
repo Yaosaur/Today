@@ -28,23 +28,23 @@ function MemberTable({ creator, members }) {
       disableColumnMenu: true,
       width: 90,
       align: 'center',
-      renderCell: params => {
-        if (params.row.email !== currentUserEmail) {
-          return (
-            <IconButton
-              color='primary'
-              size='small'
-              onClick={() =>
-                messageButtonHandler(
-                  params.row.email,
-                  params.row.firstName,
-                  params.row.lastName
-                )
-              }
-            >
-              <MessageIcon fontSize='small' />
-            </IconButton>
-          );
+      // renderCell: params => {
+      //   if (params.row.email !== currentUserEmail) {
+      //     return (
+      //       <IconButton
+      //         color='primary'
+      //         size='small'
+      //         onClick={() =>
+      //           messageButtonHandler(
+      //             params.row.email,
+      //             params.row.firstName,
+      //             params.row.lastName
+      //           )
+      //         }
+      //       >
+      //         <MessageIcon fontSize='small' />
+      //       </IconButton>
+      //     );
         }
       },
     },
