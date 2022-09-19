@@ -8,7 +8,7 @@ The live site is currently hosted [here](https://today-pm.herokuapp.com/)
 
 Demo of creating a project
 
-![Demo of creating a project](/frontend/src/images/today-project-demo.gif)
+![Demo of creating a project](/src/images/today-project-demo.gif)
 
 ## Features
 
