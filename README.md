@@ -4,7 +4,11 @@ Today is a project management app meant to be used with the [Today API](https://
 
 ## Demo
 
-The live site is currently hosted [here](https://today-pm.herokuapp.com/).
+The live site is currently hosted [here](https://today-pm.herokuapp.com/)
+
+Demo of creating a project
+
+![Demo of creating a project](/frontend/src/images/today-project-demo.gif)
 
 ## Features
 
