@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { sendMessage, getMessages } from '../services/messages-api';
+import { io } from 'socket.io-client';
 
 import {
   Grid,
@@ -17,19 +18,26 @@ import SendIcon from '@mui/icons-material/Send';
 
 function Messages() {
   const { email } = useParams();
-  const location = useLocation();
   const currentUser = useSelector(state => state.auth.user);
   const [messages, setMessages] = useState([]);
   const messageInput = useRef('');
+  const socket = useRef();
 
   useEffect(() => {
+    socket.current = io(process.env.REACT_APP_BACKEND_URL);
+    socket.current.emit('addUser', currentUser.id);
+
     getMessages(email).then(data => setMessages(data.data));
-  }, [email]);
+  }, [currentUser, email]);
 
   const submitMessageHandler = () => {
-    sendMessage({
-      receiverEmail: email,
-      content: messageInput.current.value,
+    const receiverEmail = email;
+    const sender = currentUser.id;
+    const content = messageInput.current.value;
+
+    socket.current.emit('sendMsg', { receiverEmail, sender, content });
+    socket.current.on('receiveMsg', message => {
+      setMessages(prev => [...prev, message]);
     });
     messageInput.current.value = '';
   };
@@ -38,7 +46,7 @@ function Messages() {
     <Grid container direction='column'>
       <h4>You are chatting with {}</h4>
       <Grid container item xs={12}>
-        <List>
+        <List ref={socket}>
           {messages.map(message => {
             return (
               <ListItem key={message._id}>

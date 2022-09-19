@@ -21,63 +21,33 @@ function MemberTable({ creator, members }) {
     },
     { field: 'lastName', headerName: 'Last Name', minWidth: 100, flex: 1 },
     { field: 'email', headerName: 'Email', minWidth: 150, flex: 1.5 },
-    // <<<<<<< HEAD
-    //     // {
-    //     //   field: 'message',
-    //     //   headerName: 'Message',
-    //     //   sortable: false,
-    //     //   disableColumnMenu: true,
-    //     //   width: 90,
-    //     //   align: 'center',
-    //     // renderCell: params => {
-    //     //   if (params.row.email !== currentUserEmail) {
-    //     //     return (
-    //     //       <IconButton
-    //     //         color='primary'
-    //     //         size='small'
-    //     //         onClick={() =>
-    //     //           messageButtonHandler(
-    //     //             params.row.email,
-    //     //             params.row.firstName,
-    //     //             params.row.lastName
-    //     //           )
-    //     //         }
-    //     //       >
-    //     //         <MessageIcon fontSize='small' />
-    //     //       </IconButton>
-    //     //     );
-    //     //   }
-    //     // },
-    //     // },
-    // =======
-    //     {
-    //       field: 'message',
-    //       headerName: 'Message',
-    //       sortable: false,
-    //       disableColumnMenu: true,
-    //       width: 90,
-    //       align: 'center',
-    //       // renderCell: params => {
-    //       //   if (params.row.email !== currentUserEmail) {
-    //       //     return (
-    //       //       <IconButton
-    //       //         color='primary'
-    //       //         size='small'
-    //       //         onClick={() =>
-    //       //           messageButtonHandler(
-    //       //             params.row.email,
-    //       //             params.row.firstName,
-    //       //             params.row.lastName
-    //       //           )
-    //       //         }
-    //       //       >
-    //       //         <MessageIcon fontSize='small' />
-    //       //       </IconButton>
-    //       //     );
-    //       //   }
-    //       // },
-    //     },
-    // >>>>>>> 357db50e3919604335ac77432c3fa9df03cee4de
+    {
+      field: 'message',
+      headerName: 'Message',
+      sortable: false,
+      disableColumnMenu: true,
+      width: 90,
+      align: 'center',
+      renderCell: params => {
+        if (params.row.email !== currentUserEmail) {
+          return (
+            <IconButton
+              color='primary'
+              size='small'
+              onClick={() =>
+                messageButtonHandler(
+                  params.row.email,
+                  params.row.firstName,
+                  params.row.lastName
+                )
+              }
+            >
+              <MessageIcon fontSize='small' />
+            </IconButton>
+          );
+        }
+      },
+    },
   ];
 
   let allMembers = [creator, ...members];
