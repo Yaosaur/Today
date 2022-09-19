@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { sendMessage, getMessages } from '../services/messages-api';
+import { getMessages } from '../services/messages-api';
 import { io } from 'socket.io-client';
 
 import {
@@ -19,6 +19,7 @@ import SendIcon from '@mui/icons-material/Send';
 function Messages() {
   const { email } = useParams();
   const currentUser = useSelector(state => state.auth.user);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [messages, setMessages] = useState([]);
   const messageInput = useRef('');
   const socket = useRef();
@@ -30,6 +31,10 @@ function Messages() {
     getMessages(email).then(data => setMessages(data.data));
   }, [currentUser, email]);
 
+  useEffect(() => {
+    arrivalMessage && setMessages(prev => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
   const submitMessageHandler = () => {
     const receiverEmail = email;
     const sender = currentUser.id;
@@ -37,7 +42,7 @@ function Messages() {
 
     socket.current.emit('sendMsg', { receiverEmail, sender, content });
     socket.current.on('receiveMsg', message => {
-      setMessages(prev => [...prev, message]);
+      setArrivalMessage(message);
     });
     messageInput.current.value = '';
   };
