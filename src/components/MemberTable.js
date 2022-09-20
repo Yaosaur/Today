@@ -8,8 +8,9 @@ function MemberTable({ creator, members }) {
   const currentUserEmail = useSelector(state => state.auth.user.email);
   const nav = useNavigate();
 
-  const messageButtonHandler = (email, firstName, lastName) => {
-    nav(`/messages/${email}`, { state: { firstName, lastName } });
+  const messageButtonHandler = email => {
+    const users = [currentUserEmail, email];
+    nav(`/messages/${users.sort().join('&')}`);
   };
 
   const columns = [

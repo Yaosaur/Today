@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMessages } from '../services/messages-api';
 import { io } from 'socket.io-client';
@@ -17,8 +17,12 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 
 function Messages() {
-  const { email } = useParams();
   const currentUser = useSelector(state => state.auth.user);
+  const currentUserId = currentUser.id;
+  const { roomId } = useParams();
+  const email = roomId
+    .split('&')
+    .find(emailAddress => emailAddress !== currentUser.email);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [messages, setMessages] = useState([]);
   const messageInput = useRef('');
@@ -26,10 +30,19 @@ function Messages() {
 
   useEffect(() => {
     socket.current = io(process.env.REACT_APP_BACKEND_URL);
-    socket.current.emit('addUser', currentUser.id);
+    socket.current.emit('joinRoom', roomId);
+    socket.current.on('receiveMsg', message => {
+      console.log(message);
+      setArrivalMessage(message);
+    });
+    const socketInstance = socket.current;
 
     getMessages(email).then(data => setMessages(data.data));
-  }, [currentUser, email]);
+
+    return () => {
+      socketInstance.disconnect();
+    };
+  }, [currentUserId, roomId, email]);
 
   useEffect(() => {
     arrivalMessage && setMessages(prev => [...prev, arrivalMessage]);
@@ -39,11 +52,7 @@ function Messages() {
     const receiverEmail = email;
     const sender = currentUser.id;
     const content = messageInput.current.value;
-
     socket.current.emit('sendMsg', { receiverEmail, sender, content });
-    socket.current.on('receiveMsg', message => {
-      setArrivalMessage(message);
-    });
     messageInput.current.value = '';
   };
 
