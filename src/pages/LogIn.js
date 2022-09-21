@@ -83,7 +83,7 @@ function LogIn() {
               <TextField
                 size='small'
                 id='outlined-required'
-                type="password"
+                type='password'
                 label='Password'
                 placeholder='Password'
                 name='password'

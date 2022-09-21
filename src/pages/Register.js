@@ -12,8 +12,16 @@ function Register() {
   const dispatch = useDispatch();
   const nav = useNavigate();
 
-  const onSubmit = values => {
-    dispatch(authUser('register', values)).then(result => nav('/'));
+  const onSubmit = ({ firstName, lastName, email, password }) => {
+    dispatch(
+      authUser('register', {
+        firstName,
+        lastName,
+        email,
+        password,
+        image: null,
+      })
+    ).then(result => nav('/'));
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
@@ -23,10 +31,13 @@ function Register() {
         lastName: '',
         email: '',
         password: '',
+        confirmPassword: '',
       },
       validationSchema: registerSchema,
       onSubmit,
     });
+
+  console.log(errors);
 
   return (
     <Grid
@@ -47,7 +58,13 @@ function Register() {
         <Typography variant='title' sx={{ color: 'white' }}>
           Today
         </Typography>
-        <FormPaper elevation={3} sx={{ width: 375, height: 500 }}>
+        <FormPaper
+          elevation={3}
+          sx={{
+            width: 375,
+            height: Object.keys(errors).length !== 0 ? 600 : 500,
+          }}
+        >
           <form onSubmit={handleSubmit}>
             <Stack
               spacing={2.5}
@@ -106,6 +123,21 @@ function Register() {
                 onBlur={handleBlur}
                 error={touched.password && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
+              />
+              <TextField
+                size='small'
+                id='outlined-required'
+                type='password'
+                label='Confirm Password'
+                placeholder='Confirm Password'
+                name='confirmPassword'
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  touched.confirmPassword && Boolean(errors.confirmPassword)
+                }
+                helperText={touched.confirmPassword && errors.confirmPassword}
               />
               <Button variant='contained' type='submit'>
                 Submit
