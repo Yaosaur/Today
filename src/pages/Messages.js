@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { Navigate, useParams, useLocation } from 'react-router-dom';
 import { getMessages } from '../services/messages-api';
 import dateTransformer from '../utils/dateTransformer';
 import { timeTransformer } from '../utils/dateTransformer';
@@ -27,7 +27,7 @@ function Messages() {
   const email = roomId
     .split('&')
     .find(emailAddress => emailAddress !== currentUser.email);
-  const { firstName, lastName } = useLocation().state;
+  const locationState = useLocation().state;
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -73,99 +73,12 @@ function Messages() {
     messageInput.current.value = '';
   };
 
-  const mainContent = (
-    <Grid container sx={{ display: isLoading && 'none', height: '90vh' }}>
-      <Grid container item lg={12} justifyContent='center' columnGap={1}>
-        <Typography variant='h4'>You are chatting with </Typography>
-        <Typography variant='h4' fontWeight='bold'>
-          {firstName.split(' (Creator)')[0]} {lastName}
-        </Typography>
-      </Grid>
-      <Grid
-        container
-        item
-        xs={12}
-        sx={{
-          mt: 3,
-          mb: 3,
-          height: '70%',
-          overflow: 'auto',
-          maxHeight: { xl: 550, sm: 500 },
-        }}
-      >
-        <List ref={socket}>
-          {messages.map(message => {
-            return (
-              <ListItem key={message._id}>
-                <ListItemAvatar>
-                  <Avatar
-                    src={message.sender.image}
-                    sx={{ width: '3rem', height: '3rem' }}
-                  >
-                    {message.sender.firstName[0]} {message.sender.lastName[0]}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primaryTypographyProps={{ fontWeight: 'bold' }}
-                  secondaryTypographyProps={{
-                    color: 'black',
-                    fontWeight: '500',
-                  }}
-                  primary={
-                    <>
-                      {message.sender.firstName}
-                      <Typography
-                        sx={{
-                          display: 'inline',
-                          marginLeft: 1,
-                          fontSize: '0.75rem',
-                        }}
-                      >
-                        {`${dateTransformer(message.createdAt)} at
-                      ${timeTransformer(new Date(message.createdAt))}`}
-                      </Typography>
-                    </>
-                  }
-                  secondary={message.content}
-                />
-              </ListItem>
-            );
-          })}
-          <div ref={bottomRef} />
-        </List>
-      </Grid>
-      <Grid container item xs={12} sx={{ height: '10%' }}>
-        <TextField
-          inputRef={messageInput}
-          size='small'
-          sx={{ width: '100%' }}
-          InputProps={{
-            endAdornment: (
-              <Button
-                size='small'
-                variant='contained'
-                onClick={submitMessageHandler}
-                sx={{ height: '100%' }}
-                endIcon={<SendIcon />}
-              >
-                Send
-              </Button>
-            ),
-            sx: {
-              pr: 0,
-              pt: 0,
-              pb: 0,
-              backgroundColor: 'white',
-            },
-          }}
-        />
-      </Grid>
-    </Grid>
-  );
+  console.log(locationState === null);
 
   return (
     <>
-      {isLoading && (
+      {locationState === null && <Navigate replace to={-1} />}
+      {locationState && isLoading && (
         <Grid
           container
           height='100%'
@@ -176,7 +89,97 @@ function Messages() {
           <CircularProgress size='7rem' />
         </Grid>
       )}
-      {mainContent}
+      {locationState && (
+        <Grid container sx={{ display: isLoading && 'none', height: '90vh' }}>
+          <Grid container item lg={12} justifyContent='center' columnGap={1}>
+            <Typography variant='h4'>You are chatting with </Typography>
+            <Typography variant='h4' fontWeight='bold'>
+              {locationState.firstName.split(' (Creator)')[0]}{' '}
+              {locationState.lastName}
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={12}
+            sx={{
+              mt: 3,
+              mb: 3,
+              height: '70%',
+              overflow: 'auto',
+              maxHeight: { xl: 550, sm: 500 },
+            }}
+          >
+            <List ref={socket}>
+              {messages.map(message => {
+                return (
+                  <ListItem key={message._id}>
+                    <ListItemAvatar>
+                      <Avatar
+                        src={message.sender.image}
+                        sx={{ width: '3rem', height: '3rem' }}
+                      >
+                        {message.sender.firstName[0]}{' '}
+                        {message.sender.lastName[0]}
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primaryTypographyProps={{ fontWeight: 'bold' }}
+                      secondaryTypographyProps={{
+                        color: 'black',
+                        fontWeight: '500',
+                      }}
+                      primary={
+                        <>
+                          {message.sender.firstName}
+                          <Typography
+                            sx={{
+                              display: 'inline',
+                              marginLeft: 1,
+                              fontSize: '0.75rem',
+                            }}
+                          >
+                            {`${dateTransformer(message.createdAt)} at
+                      ${timeTransformer(new Date(message.createdAt))}`}
+                          </Typography>
+                        </>
+                      }
+                      secondary={message.content}
+                    />
+                  </ListItem>
+                );
+              })}
+              <div ref={bottomRef} />
+            </List>
+          </Grid>
+          <Grid container item xs={12} sx={{ height: '10%' }}>
+            <TextField
+              inputRef={messageInput}
+              size='small'
+              sx={{ width: '100%' }}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    size='small'
+                    variant='contained'
+                    onClick={submitMessageHandler}
+                    sx={{ height: '100%' }}
+                    endIcon={<SendIcon />}
+                  >
+                    Send
+                  </Button>
+                ),
+                sx: {
+                  pr: 0,
+                  pt: 0,
+                  pb: 0,
+                  backgroundColor: 'white',
+                },
+              }}
+            />
+          </Grid>
+        </Grid>
+      )}
     </>
   );
 }
