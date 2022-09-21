@@ -6,8 +6,6 @@ import { DataGrid } from '@mui/x-data-grid';
 function TaskTable({ taskData, project, tableRows }) {
   const nav = useNavigate();
 
-  console.log(taskData);
-
   const projectPage = [
     {
       field: 'title',
