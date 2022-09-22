@@ -30,8 +30,10 @@ function Register() {
       })
     )
       .then(result => nav('/'))
-      .catch(err => setError(err.response.data));
-    resetForm();
+      .catch(err => {
+        setError(err.response.data);
+        resetForm();
+      });
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =

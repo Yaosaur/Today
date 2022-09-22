@@ -22,8 +22,10 @@ function LogIn() {
       .then(result => {
         nav('/');
       })
-      .catch(err => setError(err.response.data));
-    resetForm();
+      .catch(err => {
+        setError(err.response.data);
+        resetForm();
+      });
   };
 
   const demoLogInHandler = () => {

@@ -17,6 +17,7 @@ const Project = React.lazy(() => import('./pages/Project'));
 const Tasks = React.lazy(() => import('./pages/Tasks'));
 const Task = React.lazy(() => import('./pages/Task'));
 const Messages = React.lazy(() => import('./pages/Messages'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 const customTheme = createTheme(theme);
 
@@ -45,6 +46,7 @@ function App() {
               <Route path='tasks/:taskId' element={<Task />} />
               <Route path='/tasks' element={<Tasks />} />
               <Route path='/messages/:roomId' element={<Messages />} />
+              <Route path='/*' element={<NotFound />} />
             </Route>
             <Route path='/' element={<AuthRoute />}>
               <Route path='/login' element={<LogIn />} />
