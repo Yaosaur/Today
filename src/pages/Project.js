@@ -50,8 +50,15 @@ function Project() {
         setMembers(data.data.members);
         setIsLoading(false);
       })
-      .catch(error => console.log(error.response.data));
-  }, [projectId]);
+      .catch(error =>
+        nav('/non-existent', {
+          state: {
+            message: `That project doesn't exist`,
+            status: 404,
+          },
+        })
+      );
+  }, [projectId, nav]);
 
   const { values, touched, errors, handleChange, handleBlur } = useFormik({
     enableReinitialize: true,

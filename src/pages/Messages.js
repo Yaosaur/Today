@@ -24,7 +24,6 @@ import SendIcon from '@mui/icons-material/Send';
 function Messages() {
   const currentUser = useSelector(state => state.auth.user);
   const nav = useNavigate();
-  const currentUserId = currentUser.id;
   const { roomId } = useParams();
   const email = roomId
     .split('&')
@@ -39,7 +38,7 @@ function Messages() {
 
   useEffect(() => {
     if (roomId.indexOf(currentUser.email) === -1) {
-      nav('/notAuthorized', {
+      nav('/not-authorized', {
         state: { message: 'You are not authorized for that page', status: 401 },
       });
     }
@@ -54,7 +53,7 @@ function Messages() {
 
     findUser(email).then(data => {
       if (data.data.length === 0) {
-        nav('/notAuthorized', {
+        nav('/not-authorized', {
           state: {
             message: `The other user doesn't exist`,
             status: 404,
@@ -74,7 +73,7 @@ function Messages() {
     return () => {
       socketInstance.disconnect();
     };
-  }, [currentUserId, roomId, email]);
+  }, [currentUser.email, roomId, email, nav]);
 
   useEffect(() => {
     arrivalMessage && setMessages(prev => [...prev, arrivalMessage]);

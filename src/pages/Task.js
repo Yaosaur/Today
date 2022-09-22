@@ -52,11 +52,20 @@ function Task() {
   });
 
   useEffect(() => {
-    getTask(taskId).then(data => {
-      setTask(data.data);
-      setIsLoading(false);
-    });
-  }, [taskId]);
+    getTask(taskId)
+      .then(data => {
+        setTask(data.data);
+        setIsLoading(false);
+      })
+      .catch(error =>
+        nav('/non-existent', {
+          state: {
+            message: `That task doesn't exist`,
+            status: 404,
+          },
+        })
+      );
+  }, [taskId, nav]);
 
   const userInvolvedInTask = () => {
     const involvedUsers = [issuer, ...assignedTo];
