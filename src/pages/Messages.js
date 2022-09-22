@@ -41,6 +41,7 @@ function Messages() {
     socket.current.on('receiveMsg', message => {
       setArrivalMessage(message);
     });
+
     const socketInstance = socket.current;
 
     getMessages(email).then(data => {
@@ -72,8 +73,6 @@ function Messages() {
     socket.current.emit('sendMsg', { receiverEmail, sender, content });
     messageInput.current.value = '';
   };
-
-  console.log(locationState === null);
 
   return (
     <>

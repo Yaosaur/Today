@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import logInSchema from '../schemas/logIn';
 import { useDispatch } from 'react-redux';
@@ -11,11 +12,18 @@ import bgImage from '../images/cloudbg.jpg';
 function LogIn() {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [error, setError] = useState(null);
 
-  const onSubmit = values => {
-    dispatch(authUser('logIn', values)).then(result => {
-      nav('/');
-    });
+  const onSubmit = (values, { resetForm }) => {
+    setError(null);
+    let { email } = values;
+    email = email.trim().toLowerCase();
+    dispatch(authUser('logIn', { ...values, email }))
+      .then(result => {
+        nav('/');
+      })
+      .catch(err => setError(err.response.data));
+    resetForm();
   };
 
   const demoLogInHandler = () => {
@@ -60,17 +68,20 @@ function LogIn() {
         <FormPaper elevation={3} sx={{ width: 375, height: 400 }}>
           <form onSubmit={handleSubmit}>
             <Stack
-              spacing={2.5}
+              spacing={2}
               width='325px'
               height='400px'
               textAlign='center'
               display='flex'
               justifyContent='center'
             >
+              <Typography variant='subtitle1' color='error'>
+                {error}
+              </Typography>
               <Typography variant='h6'>Log In</Typography>
               <TextField
                 size='small'
-                id='outlined-required'
+                id='email'
                 label='Email'
                 placeholder='Email'
                 name='email'
@@ -82,7 +93,7 @@ function LogIn() {
               />
               <TextField
                 size='small'
-                id='outlined-required'
+                id='password'
                 type='password'
                 label='Password'
                 placeholder='Password'

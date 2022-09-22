@@ -28,16 +28,20 @@ export const authActions = authSlice.actions;
 
 export const authUser = (type, values) => {
   return async dispatch => {
-    let userData;
-    if (type === 'register') {
-      userData = await authAPI.register(values);
-    } else if (type === 'logIn') {
-      userData = await authAPI.logIn(values);
+    try {
+      let userData;
+      if (type === 'register') {
+        userData = await authAPI.register(values);
+      } else if (type === 'logIn') {
+        userData = await authAPI.logIn(values);
+      }
+      localStorage.setItem('token', userData.data.token);
+      axios.defaults.headers.common['Authorization'] = userData.data.token;
+      dispatch(fetchProjects());
+      dispatch(authActions.receiveUser(userData.data));
+    } catch (error) {
+      throw error;
     }
-    localStorage.setItem('token', userData.data.token);
-    axios.defaults.headers.common['Authorization'] = userData.data.token;
-    dispatch(fetchProjects());
-    return dispatch(authActions.receiveUser(userData.data));
   };
 };
 

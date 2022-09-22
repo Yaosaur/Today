@@ -44,16 +44,13 @@ function Project() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setIsEditing({
-      title: false,
-      description: false,
-      members: false,
-    });
-    getProject(projectId).then(data => {
-      setProject(data.data);
-      setMembers(data.data.members);
-      setIsLoading(false);
-    });
+    getProject(projectId)
+      .then(data => {
+        setProject(data.data);
+        setMembers(data.data.members);
+        setIsLoading(false);
+      })
+      .catch(error => console.log(error.response.data));
   }, [projectId]);
 
   const { values, touched, errors, handleChange, handleBlur } = useFormik({

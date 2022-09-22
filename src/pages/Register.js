@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import registerSchema from '../schemas/register';
 import { useDispatch } from 'react-redux';
@@ -11,8 +12,14 @@ import bgImage from '../images/cloudbg.jpg';
 function Register() {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [error, setError] = useState(null);
 
-  const onSubmit = ({ firstName, lastName, email, password }) => {
+  const onSubmit = (
+    { firstName, lastName, email, password },
+    { resetForm }
+  ) => {
+    setError(null);
+    email = email.toLowerCase();
     dispatch(
       authUser('register', {
         firstName,
@@ -21,7 +28,10 @@ function Register() {
         password,
         image: null,
       })
-    ).then(result => nav('/'));
+    )
+      .then(result => nav('/'))
+      .catch(err => setError(err.response.data));
+    resetForm();
   };
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
@@ -36,8 +46,6 @@ function Register() {
       validationSchema: registerSchema,
       onSubmit,
     });
-
-  console.log(errors);
 
   return (
     <Grid
@@ -62,22 +70,28 @@ function Register() {
           elevation={3}
           sx={{
             width: 375,
-            height: Object.keys(errors).length !== 0 ? 600 : 500,
+            height:
+              Object.keys(errors).length + Object.keys(touched).length > 8
+                ? 600
+                : 525,
           }}
         >
           <form onSubmit={handleSubmit}>
             <Stack
-              spacing={2.5}
+              spacing={2}
               width='325px'
               height='500px'
               textAlign='center'
               display='flex'
               justifyContent='center'
             >
+              <Typography variant='subtitle1' color='error'>
+                {error}
+              </Typography>
               <Typography variant='h6'>Register</Typography>
               <TextField
                 size='small'
-                id='outlined-required'
+                id='firstName'
                 label='First Name'
                 placeholder='First Name'
                 name='firstName'
@@ -89,7 +103,7 @@ function Register() {
               />
               <TextField
                 size='small'
-                id='outlined-required'
+                id='lastName'
                 label='Last Name'
                 placeholder='Last Name'
                 name='lastName'
@@ -101,7 +115,7 @@ function Register() {
               />
               <TextField
                 size='small'
-                id='outlined-required'
+                id='email'
                 label='Email'
                 placeholder='Email'
                 name='email'
@@ -113,7 +127,7 @@ function Register() {
               />
               <TextField
                 size='small'
-                id='outlined-required'
+                id='password'
                 type='password'
                 label='Password'
                 placeholder='Password'
@@ -126,7 +140,7 @@ function Register() {
               />
               <TextField
                 size='small'
-                id='outlined-required'
+                id='confirmPassword'
                 type='password'
                 label='Confirm Password'
                 placeholder='Confirm Password'

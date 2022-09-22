@@ -56,8 +56,6 @@ function Comments({ taskId, taskComments }) {
     );
   };
 
-  console.log(comments);
-
   const handleClick = (event, index) => {
     const { menus } = anchorEl;
     menus[index] = true;
