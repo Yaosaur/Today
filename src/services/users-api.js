@@ -6,8 +6,8 @@ export const findUsers = () => {
   return axios.get(`${baseURL}/users`);
 };
 
-export const findUser = () => {
-  return axios.get(`${baseURL}/users/user`);
+export const findUser = email => {
+  return axios.get(`${baseURL}/users/user/${email}`);
 };
 
 export const changeUserPhoto = data => {

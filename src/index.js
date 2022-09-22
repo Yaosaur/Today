@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       store.dispatch(logOut());
     } else {
       store.dispatch(authActions.receiveUser(decodedUser));
-      const userData = await findUser();
+      const userData = await findUser(decodedUser.email);
       store.dispatch(authActions.editUserImage(userData.data.image));
       store.dispatch(fetchProjects());
     }
