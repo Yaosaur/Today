@@ -45,22 +45,21 @@ function TaskForm({
   };
 
   const onSubmit = values => {
+    if (assignedTo.length === 0) {
+      setErrMsg('Assign this task to at least one member');
+      return;
+    }
     if (defaultValues) {
       editTask(taskId, { ...values, assignedTo }).then(data => {
         taskHandler(data.data);
         formHandler(false);
       });
     } else {
-      if (assignedTo.length === 0) {
-        setErrMsg('Assign this task to at least one member');
-        return;
-      } else {
-        createTask(projectId, { ...values, assignedTo }).then(data => {
-          setProject(data.data);
-          dispatch(projectsActions.editProject(data.data));
-          formHandler(false);
-        });
-      }
+      createTask(projectId, { ...values, assignedTo }).then(data => {
+        setProject(data.data);
+        dispatch(projectsActions.editProject(data.data));
+        formHandler(false);
+      });
     }
   };
 

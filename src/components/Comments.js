@@ -11,6 +11,7 @@ import {
   Card,
   CardHeader,
   CardContent,
+  Tooltip,
   Divider,
   Avatar,
   Menu,
@@ -77,16 +78,17 @@ function Comments({ taskId, taskComments }) {
   };
 
   const editSubmitHandler = (commentId, index) => {
-    if (editCommentInput.current.value.trim().length === 0) {
-      editCommentInput.current.value = '';
+    const editedComment = editCommentInput.current.value.trim();
+    if (editedComment.length === 0) {
       return;
+    } else if (editedComment === comments[index].comment) {
+      return setIsEditing(comments.map(comment => false));
     }
     editComment(taskId, commentId, {
-      comment: editCommentInput.current.value,
+      comment: editedComment,
     }).then(data => {
       setComments(data.data.comments);
       editCommentInput.current.value = '';
-      handleClose(index);
     });
   };
 
@@ -98,22 +100,28 @@ function Comments({ taskId, taskComments }) {
   };
 
   return (
-    <Grid container alignContent='flex-start'>
-      <Grid container item xs={12} sx={{ height: '80%' }}>
+    <Grid
+      container
+      alignContent='flex-start'
+      sx={{ height: '90vh' }}
+      rowGap={2}
+    >
+      <Grid container item xs={12}>
         <Typography variant='h4'>Comments</Typography>
-        <List
-          sx={{
-            width: '100%',
-            position: 'relative',
-            overflow: 'auto',
-            height: { xl: '90%', lg: '80%' },
-            maxHeight: { xl: 700, lg: 600 },
-            mt: 1,
-            mb: 1,
-            pb: 0,
-            '& ul': { padding: 0 },
-          }}
-        >
+      </Grid>
+      <Grid
+        container
+        item
+        xs={12}
+        sx={{
+          mt: 2,
+          mb: 2,
+          height: '90%',
+          overflow: 'auto',
+          maxHeight: { xl: 550, sm: 500 },
+        }}
+      >
+        <List sx={{ width: '100%' }}>
           {comments.map((comment, index) => (
             <Card key={comment._id} sx={{ maxWidth: '100%', boxShadow: 0 }}>
               <CardHeader
@@ -133,8 +141,8 @@ function Comments({ taskId, taskComments }) {
                 titleTypographyProps={{ variant: 'subtitle1' }}
                 title={`${comment.poster.firstName} ${comment.poster.lastName}`}
                 subheader={`${dateTransformer(
-                  comment.published
-                )} ${timeTransformer(new Date(comment.published))}`}
+                  comment.createdAt
+                )} ${timeTransformer(new Date(comment.createdAt))}`}
               />
               <Menu
                 id='basic-menu'
@@ -155,18 +163,38 @@ function Comments({ taskId, taskComments }) {
               </Menu>
               <CardContent sx={{ pl: 1 }}>
                 {!isEditing[index] && (
-                  <Typography
-                    sx={{ wordWrap: 'break-word' }}
-                    variant='subtitle2'
-                  >
-                    {comment.comment}
-                  </Typography>
+                  <>
+                    <Typography
+                      sx={{ wordWrap: 'break-word', display: 'inline' }}
+                      variant='subtitle2'
+                    >
+                      {comment.comment}
+                    </Typography>
+                    {comment.createdAt !== comment.updatedAt && (
+                      <Tooltip
+                        title={`${dateTransformer(
+                          comment.updatedAt
+                        )} ${timeTransformer(new Date(comment.updatedAt))}`}
+                      >
+                        <Typography
+                          sx={{
+                            wordWrap: 'break-word',
+                            ml: 1,
+                            color: '#BEBEBE',
+                          }}
+                          variant='caption'
+                        >
+                          (edited)
+                        </Typography>
+                      </Tooltip>
+                    )}
+                  </>
                 )}
                 {isEditing[index] && (
                   <>
                     <TextField
-                      inputRef={editCommentInput}
                       defaultValue={comment.comment}
+                      inputRef={editCommentInput}
                       size='small'
                       multiline
                       rows={2}
@@ -207,7 +235,12 @@ function Comments({ taskId, taskComments }) {
           size='small'
           multiline
           rows={2}
-          sx={{ width: '100%', height: '20%', backgroundColor: 'white' }}
+          sx={{ width: '100%', height: '10%', backgroundColor: 'white' }}
+          onKeyDown={event => {
+            if (event.code === 'Enter') {
+              submitCommentHandler();
+            }
+          }}
           InputProps={{
             endAdornment: (
               <Button

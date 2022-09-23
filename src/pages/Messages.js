@@ -88,9 +88,12 @@ function Messages() {
   }, [messages]);
 
   const submitMessageHandler = () => {
+    const content = messageInput.current.value.trim();
+    if (content.length === 0) {
+      return;
+    }
     const receiverEmail = email;
     const sender = currentUser.id;
-    const content = messageInput.current.value;
     socket.current.emit('sendMsg', { receiverEmail, sender, content });
     messageInput.current.value = '';
   };
@@ -174,6 +177,11 @@ function Messages() {
             inputRef={messageInput}
             size='small'
             sx={{ width: '100%' }}
+            onKeyDown={event => {
+              if (event.code === 'Enter') {
+                submitMessageHandler();
+              }
+            }}
             InputProps={{
               endAdornment: (
                 <Button
@@ -196,7 +204,6 @@ function Messages() {
           />
         </Grid>
       </Grid>
-      )
     </>
   );
 }

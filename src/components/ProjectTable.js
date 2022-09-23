@@ -15,7 +15,7 @@ function ProjectTable({ projectData }) {
   ];
 
   let transformedData = projectData.map(project => {
-    let transformedMembers = project.members
+    let transformedMembers = [project.creator, ...project.members]
       .map(member => `${member.firstName} ${member.lastName}`)
       .join(', ');
     return { ...project, id: project._id, members: transformedMembers };

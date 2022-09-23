@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
       store.dispatch(authActions.receiveUser(decodedUser));
       const userData = await findUser(decodedUser.email);
-      store.dispatch(authActions.editUserImage(userData.data.image));
+      store.dispatch(authActions.editUserImage(userData.data[0].image));
       store.dispatch(fetchProjects());
     }
   }

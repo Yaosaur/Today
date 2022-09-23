@@ -60,14 +60,28 @@ function Project() {
       );
   }, [projectId, nav]);
 
-  const { values, touched, errors, handleChange, handleBlur } = useFormik({
-    enableReinitialize: true,
-    initialValues: {
-      title: project.title,
-      description: project.description,
-    },
-    validationSchema: newProjectSchema,
-  });
+  const onSubmit = values => {
+    editProject(projectId, { ...values, members }).then(data => {
+      dispatch(projectsActions.editProject(data.data));
+      setProject(data.data);
+      setIsEditing({
+        title: false,
+        description: false,
+        members: false,
+      });
+    });
+  };
+
+  const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
+    useFormik({
+      enableReinitialize: true,
+      initialValues: {
+        title: project.title,
+        description: project.description,
+      },
+      validationSchema: newProjectSchema,
+      onSubmit,
+    });
 
   const editingHandler = (type, state) => {
     if (type === 'title') {
@@ -81,18 +95,6 @@ function Project() {
 
   const changeMemberHandler = members => {
     setMembers(members);
-  };
-
-  const editProjectHandler = () => {
-    editProject(projectId, { ...values, members }).then(data => {
-      dispatch(projectsActions.editProject(data.data));
-      setProject(data.data);
-      setIsEditing({
-        title: false,
-        description: false,
-        members: false,
-      });
-    });
   };
 
   const cancelEditingMembersHandler = () => {
@@ -170,7 +172,7 @@ function Project() {
                     sx={{ width: 250 }}
                   />
                   <Tooltip title='Save Changes'>
-                    <IconButton onClick={editProjectHandler}>
+                    <IconButton onClick={handleSubmit}>
                       <CheckIcon />
                     </IconButton>
                   </Tooltip>
@@ -230,7 +232,7 @@ function Project() {
                     sx={{ width: 250 }}
                   />
                   <Tooltip title='Save Changes'>
-                    <IconButton onClick={editProjectHandler}>
+                    <IconButton onClick={handleSubmit}>
                       <CheckIcon />
                     </IconButton>
                   </Tooltip>
@@ -269,7 +271,7 @@ function Project() {
                 onChange={changeMemberHandler}
               />
               <Tooltip title='Save Changes'>
-                <IconButton size='small' onClick={editProjectHandler}>
+                <IconButton size='small' onClick={handleSubmit}>
                   <CheckIcon />
                 </IconButton>
               </Tooltip>
