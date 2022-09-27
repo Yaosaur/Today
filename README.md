@@ -1,6 +1,6 @@
 # Today
 
-Today is a project management app meant to be used with the [Today API](https://github.com/Yaosaur/Today-API) to help users collaborate on projects. These projects can be broken into smaller tasks which can later be updated and commented on as the project grows.
+Today is a project management app meant to be used with the [Today API](https://github.com/Yaosaur/Today-API) to help users collaborate on projects. These projects can be broken into smaller tasks which can be updated. Within the tasks, users are able to post, edit, and delete their own comments and comments from other users. Users also have the option to upload a profile picture of themselves as well as chat with project members.
 
 ## Demo
 
