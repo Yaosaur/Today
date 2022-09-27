@@ -10,7 +10,7 @@ Demo of creating a project
 
 The live site is currently hosted [here](https://today-pm.herokuapp.com/)
 
-Click [here](https://www.youtube.com/watch?v=tLflt5IE7Mk) to see a video of all the features of this project.
+Click [here](https://www.youtube.com/watch?v=fFF42Xk4qY0) to see a video of all the features of this project.
 
 ## Features
 
