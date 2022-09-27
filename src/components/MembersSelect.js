@@ -14,7 +14,6 @@ function MembersSelect({ memberOptions, defaultMembers, onChange, errMsg }) {
       setOptions([currentUser, ...memberOptions]);
     } else {
       findUsers().then(data => {
-        console.log(data);
         const filteredEmailList = data.data.filter(
           user => user.email !== currentUser.email
         );
