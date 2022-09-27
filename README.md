@@ -4,11 +4,13 @@ Today is a project management app meant to be used with the [Today API](https://
 
 ## Demo
 
-The live site is currently hosted [here](https://today-pm.herokuapp.com/)
-
 Demo of creating a project
 
 ![Demo of creating a project](/src/images/today-project-demo.gif)
+
+The live site is currently hosted [here](https://today-pm.herokuapp.com/)
+
+Click [here](https://www.youtube.com/watch?v=tLflt5IE7Mk) to see a video of all the features of this project.
 
 ## Features
 
@@ -27,10 +29,10 @@ Users will be able to:
 - Edit, delete, and update existing tasks (Edit and update are features only available to members involved with the task and not every project member while delete is only available to the task issuer)
 - Comment on a task
 - Edit and delete comments
+- Send messages to team members in real time and view previous messages
 
 Additional features for the future:
 
-- Incorporating chat/messaging for user collaboration
 - Allow images to be attached to comments and a section for all images associated with a task
 - Adding dark mode
 - Touch up on styling
