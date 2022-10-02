@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as authAPI from '../services/auth-api';
-import { fetchProjects } from './projects-slice';
 import axios from 'axios';
 
 const initialAuthState = { isLoggedIn: false, user: {} };
@@ -37,7 +36,6 @@ export const authUser = (type, values) => {
       }
       localStorage.setItem('token', userData.data.token);
       axios.defaults.headers.common['Authorization'] = userData.data.token;
-      dispatch(fetchProjects());
       dispatch(authActions.receiveUser(userData.data));
     } catch (error) {
       throw error;
