@@ -13,16 +13,19 @@ function LogIn() {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (values, { resetForm }) => {
     setError(null);
     let { email } = values;
     email = email.trim().toLowerCase();
+    setIsLoading(true);
     dispatch(authUser('logIn', { ...values, email }))
       .then(result => {
         nav('/');
       })
       .catch(err => {
+        setIsLoading(false);
         setError(err.response.data);
         resetForm();
       });
@@ -33,6 +36,7 @@ function LogIn() {
       email: 'demo@mail.com',
       password: 'demo123',
     };
+    setIsLoading(true);
     dispatch(authUser('logIn', demoInfo)).then(result => {
       nav('/');
     });
@@ -47,6 +51,10 @@ function LogIn() {
       validationSchema: logInSchema,
       onSubmit,
     });
+
+  if (isLoading) {
+    document.getElementById('root').style.cursor = 'wait';
+  }
 
   return (
     <Grid
@@ -80,7 +88,8 @@ function LogIn() {
               <Typography variant='subtitle1' color='error'>
                 {error}
               </Typography>
-              <Typography variant='h6'>Log In</Typography>
+              {!isLoading && <Typography variant='h6'>Log In</Typography>}
+              {isLoading && <Typography variant='h6'>Logging In...</Typography>}
               <TextField
                 size='small'
                 id='email'

@@ -13,6 +13,7 @@ function Register() {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (
     { firstName, lastName, email, password },
@@ -20,6 +21,7 @@ function Register() {
   ) => {
     setError(null);
     email = email.toLowerCase();
+    setIsLoading(true);
     dispatch(
       authUser('register', {
         firstName,
@@ -31,6 +33,7 @@ function Register() {
     )
       .then(result => nav('/'))
       .catch(err => {
+        setIsLoading(false);
         setError(err.response.data);
         resetForm();
       });
@@ -48,6 +51,10 @@ function Register() {
       validationSchema: registerSchema,
       onSubmit,
     });
+
+  if (isLoading) {
+    document.getElementById('root').style.cursor = 'wait';
+  }
 
   return (
     <Grid
@@ -90,7 +97,10 @@ function Register() {
               <Typography variant='subtitle1' color='error'>
                 {error}
               </Typography>
-              <Typography variant='h6'>Register</Typography>
+              {!isLoading && <Typography variant='h6'>Register</Typography>}
+              {isLoading && (
+                <Typography variant='h6'>Registering...</Typography>
+              )}
               <TextField
                 size='small'
                 id='firstName'
