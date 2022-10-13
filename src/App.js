@@ -8,10 +8,10 @@ import AuthRoute from './utils/AuthRoute';
 import Register from './pages/Register';
 import LogIn from './pages/LogIn';
 import ProtectedRoute from './utils/ProtectedRoute';
+import DashBoard from './pages/DashBoard';
 import theme from './styles/theme';
 import { Box, CircularProgress } from '@mui/material/';
 
-const DashBoard = React.lazy(() => import('./pages/DashBoard'));
 const Projects = React.lazy(() => import('./pages/Projects'));
 const Project = React.lazy(() => import('./pages/Project'));
 const Tasks = React.lazy(() => import('./pages/Tasks'));
