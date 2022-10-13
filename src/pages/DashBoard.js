@@ -17,6 +17,7 @@ function DashBoard() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
+    document.getElementById('root').style.cursor = 'default';
     getTasks().then(data => {
       setTasks(data.data);
       setIsLoading(false);

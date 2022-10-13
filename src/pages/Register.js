@@ -56,6 +56,10 @@ function Register() {
     document.getElementById('root').style.cursor = 'wait';
   }
 
+  if (!isLoading) {
+    document.getElementById('root').style.cursor = 'default';
+  }
+
   return (
     <Grid
       container

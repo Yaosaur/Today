@@ -22,6 +22,7 @@ function LogIn() {
     setIsLoading(true);
     dispatch(authUser('logIn', { ...values, email }))
       .then(result => {
+        setIsLoading(false);
         nav('/');
       })
       .catch(err => {
