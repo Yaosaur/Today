@@ -26,6 +26,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function Comments({ taskId, taskComments }) {
   const currentUserEmail = useSelector(state => state.auth.user.email);
+  const currentUserImage = useSelector(state => state.auth.user.image);
   const [comments, setComments] = useState(taskComments);
   const [anchorEl, setAnchorEl] = useState({ anchorEl: null, menus: [] });
   const [isEditing, setIsEditing] = useState([]);
@@ -128,7 +129,11 @@ function Comments({ taskId, taskComments }) {
                 sx={{ pl: 0.5, pb: 0 }}
                 avatar={
                   <Avatar
-                    src={comment.poster.image}
+                    src={
+                      currentUserEmail === comment.poster.email
+                        ? currentUserImage
+                        : comment.poster.image
+                    }
                   >{`${comment.poster.firstName[0]}${comment.poster.lastName[0]}`}</Avatar>
                 }
                 action={

@@ -25,6 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function Task() {
   const currentUserEmail = useSelector(state => state.auth.user.email);
+  const currentUserImage = useSelector(state => state.auth.user.image);
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { taskId } = useParams();
@@ -170,7 +171,13 @@ function Task() {
           {issuer && (
             <Chip
               avatar={
-                <Avatar src={issuer.image}>
+                <Avatar
+                  src={
+                    currentUserEmail === issuer.email
+                      ? currentUserImage
+                      : issuer.image
+                  }
+                >
                   {issuer.firstName[0]} {issuer.lastName[0]}
                 </Avatar>
               }
@@ -189,7 +196,13 @@ function Task() {
                 <Chip
                   key={index}
                   avatar={
-                    <Avatar src={member.image}>
+                    <Avatar
+                      src={
+                        currentUserEmail === member.email
+                          ? currentUserImage
+                          : member.image
+                      }
+                    >
                       {member.firstName[0]} {member.lastName[0]}
                     </Avatar>
                   }
@@ -266,7 +279,7 @@ function Task() {
               taskHandler={setTask}
               formHandler={setOpen}
               defaultValues={task}
-              memberOptions={projectData.members}
+              memberOptions={[projectData.creator, ...projectData.members]}
             />
           </ModalBox>
         </Modal>

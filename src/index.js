@@ -6,6 +6,7 @@ import App from './App';
 import { logOut } from './store/auth-slice';
 
 import { authActions } from './store/auth-slice';
+import { fetchProjects } from './store/projects-slice';
 import { findUser } from './services/users-api';
 import axios from 'axios';
 import decode from 'jwt-decode';
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       store.dispatch(authActions.receiveUser(decodedUser));
       const userData = await findUser(decodedUser.email);
       store.dispatch(authActions.editUserImage(userData.data[0].image));
+      store.dispatch(fetchProjects());
     }
   }
 });

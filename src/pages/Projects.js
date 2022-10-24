@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProjects } from '../store/projects-slice';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import ProjectTable from '../components/ProjectTable';
 import ModalBox from '../styles/ModalBox';
@@ -11,11 +10,6 @@ import AddIcon from '@mui/icons-material/Add';
 function Projects() {
   const projectData = useSelector(state => state.projects.projects);
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
 
   return (
     <>

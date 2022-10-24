@@ -316,7 +316,7 @@ function Project() {
             <ModalBox>
               <TaskForm
                 formHandler={setOpen}
-                memberOptions={project.members}
+                memberOptions={[project.creator, ...project.members]}
                 setProject={setProject}
               />
             </ModalBox>

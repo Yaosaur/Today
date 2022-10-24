@@ -137,7 +137,11 @@ function Messages() {
                 <ListItem key={message._id}>
                   <ListItemAvatar>
                     <Avatar
-                      src={message.sender.image}
+                      src={
+                        message.sender.email === currentUser.email
+                          ? currentUser.image
+                          : message.sender.image
+                      }
                       sx={{ width: '3rem', height: '3rem' }}
                     >
                       {message.sender.firstName[0]} {message.sender.lastName[0]}

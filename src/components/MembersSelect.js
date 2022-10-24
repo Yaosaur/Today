@@ -11,7 +11,7 @@ function MembersSelect({ memberOptions, defaultMembers, onChange, errMsg }) {
 
   useEffect(() => {
     if (memberOptions) {
-      setOptions([currentUser, ...memberOptions]);
+      setOptions([...memberOptions]);
     } else {
       findUsers().then(data => {
         const filteredEmailList = data.data.filter(
