@@ -8,7 +8,7 @@ Demo of creating a project
 
 ![Demo of creating a project](/src/images/today-project-demo.gif)
 
-The live site is currently hosted [here](https://today-pm.herokuapp.com/)
+The live site is currently hosted [here](https://today-pm.onrender.com)
 
 Click [here](https://www.youtube.com/watch?v=fFF42Xk4qY0) to see a video of all the features of this project.
 
