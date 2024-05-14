@@ -25,7 +25,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function Task() {
   const currentUserEmail = useSelector(state => state.auth.user.email);
-  const currentUserImage = useSelector(state => state.auth.user.image);
+  //S3 account no longer active - Legacy code is no longer being used in project
+  //Image is no longer part of the user model
+  // const currentUserImage = useSelector(state => state.auth.user.image);
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { taskId } = useParams();
@@ -172,11 +174,13 @@ function Task() {
             <Chip
               avatar={
                 <Avatar
-                  src={
-                    currentUserEmail === issuer.email
-                      ? currentUserImage
-                      : issuer.image
-                  }
+                  //S3 account no longer active - Legacy code is no longer being used in project
+                  //Sets the image on of the user who created the task
+                  // src={
+                  //   currentUserEmail === issuer.email
+                  //     ? currentUserImage
+                  //     : issuer.image
+                  // }
                 >
                   {issuer.firstName[0]} {issuer.lastName[0]}
                 </Avatar>
@@ -197,11 +201,13 @@ function Task() {
                   key={index}
                   avatar={
                     <Avatar
-                      src={
-                        currentUserEmail === member.email
-                          ? currentUserImage
-                          : member.image
-                      }
+                      //S3 account no longer active - Legacy code is no longer being used in project
+                      //Sets the image to who the task was assigned to
+                      // src={
+                      //   currentUserEmail === member.email
+                      //     ? currentUserImage
+                      //     : member.image
+                      // }
                     >
                       {member.firstName[0]} {member.lastName[0]}
                     </Avatar>

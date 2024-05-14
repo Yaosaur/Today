@@ -28,7 +28,9 @@ function Register() {
         lastName,
         email,
         password,
-        image: null,
+        //S3 account no longer active - Legacy code is no longer being used in project
+        //image attribute is no longer part of user model
+        //image: null,
       })
     )
       .then(result => nav('/'))

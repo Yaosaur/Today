@@ -19,7 +19,7 @@ Users will be able to:
 - Register
 - Login and stayed logged in upon page closure (for up to 8 hours)
 - Logout
-- Update or add a profile image
+- Update or add a profile image (Legacy)
 - View all projects they either created or are participating in (with the option of filter and sorting them)
 - Create new projects and add members to the project
 - Edit, delete, and update existing projects (This feature is only available to the creator of the project)

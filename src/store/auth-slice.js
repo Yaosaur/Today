@@ -8,14 +8,22 @@ const initialAuthState = { isLoggedIn: false, user: {} };
 const authSlice = createSlice({
   name: 'auth',
   initialState: initialAuthState,
+  //S3 account no longer active - Legacy code is no longer being used in project
+  //Reducers to set the user state including S3 image location
+  // reducers: {
+  //   receiveUser(state, action) {
+  //     const { id, firstName, lastName, email, image } = action.payload;
+  //     state.isLoggedIn = true;
+  //     state.user = { id, firstName, lastName, email, image };
+  //   },
+  //   editUserImage(state, action) {
+  //     state.user.image = action.payload;
+  //   },
   reducers: {
     receiveUser(state, action) {
-      const { id, firstName, lastName, email, image } = action.payload;
+      const { id, firstName, lastName, email } = action.payload;
       state.isLoggedIn = true;
-      state.user = { id, firstName, lastName, email, image };
-    },
-    editUserImage(state, action) {
-      state.user.image = action.payload;
+      state.user = { id, firstName, lastName, email };
     },
     removeUser(state) {
       state.isLoggedIn = false;

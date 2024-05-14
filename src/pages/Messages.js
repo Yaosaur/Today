@@ -137,11 +137,13 @@ function Messages() {
                 <ListItem key={message._id}>
                   <ListItemAvatar>
                     <Avatar
-                      src={
-                        message.sender.email === currentUser.email
-                          ? currentUser.image
-                          : message.sender.image
-                      }
+                      //S3 account no longer active - Legacy code is no longer being used in project
+                      //Sets the image on the chat avatar based on who sent the message
+                      // src={
+                      //   message.sender.email === currentUser.email
+                      //     ? currentUser.image
+                      //     : message.sender.image
+                      // }
                       sx={{ width: '3rem', height: '3rem' }}
                     >
                       {message.sender.firstName[0]} {message.sender.lastName[0]}
